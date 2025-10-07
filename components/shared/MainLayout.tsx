@@ -2,6 +2,8 @@
 
 import Sidebar from '../sidebar/Sidebar';
 import { SidebarProvider, useSidebar } from '../sidebar/SidebarContext';
+import TickerBar from './TickerBar';
+import Footer from './Footer';
 import { ReactNode, useEffect, useState } from 'react';
 
 function LayoutContent({ children }: { children: ReactNode }) {
@@ -19,16 +21,21 @@ function LayoutContent({ children }: { children: ReactNode }) {
   }, []);
 
   const marginLeft = isMobile ? '0' : (isCollapsed ? '80px' : '256px');
+  const paddingLeft = isMobile ? '0' : (isCollapsed ? '32px' : '0');
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-black flex flex-col">
       <Sidebar />
-      <main
-        style={{ marginLeft }}
-        className="transition-all duration-300 min-h-screen px-6 py-8"
+      <div
+        style={{ marginLeft, paddingLeft }}
+        className="transition-all duration-300 flex flex-col min-h-screen"
       >
-        {children}
-      </main>
+        <TickerBar />
+        <main className="flex-1 px-6 py-8">
+          {children}
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 }

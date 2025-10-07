@@ -7,13 +7,16 @@ interface SidebarContextType {
   setIsCollapsed: (collapsed: boolean) => void;
   isMobileOpen: boolean;
   setIsMobileOpen: (open: boolean) => void;
+  isPinned: boolean;
+  setIsPinned: (pinned: boolean) => void;
 }
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
 
 export function SidebarProvider({ children }: { children: ReactNode }) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true); // Start collapsed
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isPinned, setIsPinned] = useState(false);
 
   return (
     <SidebarContext.Provider
@@ -22,6 +25,8 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
         setIsCollapsed,
         isMobileOpen,
         setIsMobileOpen,
+        isPinned,
+        setIsPinned,
       }}
     >
       {children}
