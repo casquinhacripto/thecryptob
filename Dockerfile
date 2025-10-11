@@ -54,11 +54,11 @@ RUN chown -R nextjs:nodejs /app
 # Switch to non-root user
 USER nextjs
 
-# Expose port (Cloud Run will set this via PORT env var)
-EXPOSE 3000
+# Expose port (Cloud Run uses 8080)
+EXPOSE 8080
 
 # Set default port
-ENV PORT=3000
+ENV PORT=8080
 ENV HOSTNAME="0.0.0.0"
 
 # Start the application

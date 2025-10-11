@@ -37,7 +37,7 @@ steps:
       - '--set-env-vars'
       - 'NEXT_PUBLIC_SITE_URL=https://thecryptob.com,NEXT_PUBLIC_GA_MEASUREMENT_ID=G-3PW6GGDX6F'
       - '--port'
-      - '3000'
+      - '8080'
 
 images:
   - 'gcr.io/$PROJECT_ID/thecryptob:$COMMIT_SHA'
