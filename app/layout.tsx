@@ -21,6 +21,14 @@ export const metadata: Metadata = {
   creator: "TheCrypto_B",
   publisher: "TheCrypto_B",
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  icons: {
+    icon: [
+      { url: '/icon.png', type: 'image/png' },
+      { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' }
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/logo.png',
+  },
   viewport: {
     width: 'device-width',
     initialScale: 1,
