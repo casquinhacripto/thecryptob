@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import MainLayout from "@/components/shared/MainLayout";
+import GoogleAnalytics from "@/components/shared/GoogleAnalytics";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -85,6 +86,9 @@ export default function RootLayout({
         className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}
         suppressHydrationWarning
       >
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <GoogleAnalytics GA_MEASUREMENT_ID={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+        )}
         <MainLayout>{children}</MainLayout>
       </body>
     </html>
