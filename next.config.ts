@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        // Allow widget pages to be embedded anywhere
+        // Allow widget pages to be embedded anywhere (no X-Frame-Options)
         source: '/widget/:path*',
         headers: [
           {
@@ -33,12 +33,11 @@ const nextConfig: NextConfig = {
             key: 'Referrer-Policy',
             value: 'origin-when-cross-origin'
           },
-          // No X-Frame-Options header = allow embedding from any origin
         ],
       },
       {
-        // Protect all other pages with SAMEORIGIN
-        source: '/:path*',
+        // Protect all other pages with SAMEORIGIN (excluding /widget)
+        source: '/((?!widget).*)',
         headers: [
           {
             key: 'X-DNS-Prefetch-Control',
