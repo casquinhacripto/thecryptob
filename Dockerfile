@@ -21,10 +21,15 @@ RUN npm ci
 # Copy source code
 COPY . .
 
-# Copy environment file (will be overridden by Cloud Run env vars)
-# COPY .env.local .env.local
+# Accept build arguments for Next.js public environment variables
+ARG NEXT_PUBLIC_SITE_URL
+ARG NEXT_PUBLIC_GA_MEASUREMENT_ID
 
-# Build Next.js app
+# Set them as environment variables for the build
+ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
+ENV NEXT_PUBLIC_GA_MEASUREMENT_ID=$NEXT_PUBLIC_GA_MEASUREMENT_ID
+
+# Build Next.js app with environment variables
 RUN npm run build
 
 # Stage 3: Runner
