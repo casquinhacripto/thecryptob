@@ -46,7 +46,7 @@ export default function WidgetsPage() {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent tracking-tight leading-none mb-4 hover:scale-105 transition-transform duration-300 cursor-default">
               Bitcoin Price Tracker
             </h1>
-            <div className="h-1 bg-gradient-to-r from-cyan-400/60 via-blue-400/40 to-transparent rounded-full animate-[shimmer_3s_ease-in-out_infinite]"></div>
+            <div className="h-1 bg-gradient-to-r from-cyan-400/60 via-blue-400/40 to-transparent rounded-full"></div>
           </div>
           <p className="text-white/70 text-base md:text-lg leading-relaxed font-light max-w-3xl ml-0 md:ml-1 mb-4">
             Embed live Bitcoin price tracker on your website — always free, always updated.

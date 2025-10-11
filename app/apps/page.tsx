@@ -95,7 +95,7 @@ export default function AppsPage() {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent tracking-tight leading-none mb-4 hover:scale-105 transition-transform duration-300 cursor-default">
               My Apps
             </h1>
-            <div className="h-1 bg-gradient-to-r from-cyan-400/60 via-blue-400/40 to-transparent rounded-full animate-[shimmer_3s_ease-in-out_infinite]"></div>
+            <div className="h-1 bg-gradient-to-r from-cyan-400/60 via-blue-400/40 to-transparent rounded-full"></div>
           </div>
           <p className="text-white/70 text-base md:text-lg leading-relaxed font-light max-w-3xl ml-0 md:ml-1 mb-4">
             A collection of intelligent tools for creators, traders, and innovators — crafted with passion.
@@ -126,7 +126,7 @@ export default function AppsPage() {
               },
               development: {
                 label: 'IN DEV',
-                className: 'bg-gradient-to-r from-cyan-500/20 to-blue-400/10 border border-cyan-400/40 text-cyan-300 animate-[shimmer_3s_ease-in-out_infinite]'
+                className: 'bg-gradient-to-r from-cyan-500/20 to-blue-400/10 border border-cyan-400/40 text-cyan-300'
               },
             }[project.status];
 
