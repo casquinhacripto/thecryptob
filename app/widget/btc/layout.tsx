@@ -12,18 +12,12 @@ export const metadata: Metadata = {
     url: `${siteUrl}/widget/btc`,
   },
   twitter: {
-    card: 'player',
+    card: 'summary_large_image',
     title: 'Live Bitcoin Price Tracker | TheCrypto_B',
-    description: 'Real-time Bitcoin price tracking widget. Watch BTC price updates live!',
+    description: 'Real-time Bitcoin price tracking widget. Watch BTC price updates live! 📊',
     images: [`${siteUrl}/logo.png`],
     site: '@TheCrypto_B',
     creator: '@TheCrypto_B',
-  },
-  other: {
-    'twitter:player': `${siteUrl}/widget/btc`,
-    'twitter:player:width': '800',
-    'twitter:player:height': '500',
-    'twitter:player:stream': `${siteUrl}/widget/btc`,
   },
 };
 
