@@ -16,7 +16,7 @@ export default function WidgetsPage() {
   };
 
   const embedCode = `<iframe
-  src="${process.env.NEXT_PUBLIC_SITE_URL || 'https://thecryptob-hub.vercel.app'}/widget/btc"
+  src="${process.env.NEXT_PUBLIC_SITE_URL || 'https://thecryptob.com'}/widget/btc"
   width="${widgetSizes[widgetSize].width}"
   height="${widgetSizes[widgetSize].height}"
   frameborder="0"
