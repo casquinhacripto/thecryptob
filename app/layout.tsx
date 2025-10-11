@@ -21,6 +21,12 @@ export const metadata: Metadata = {
   creator: "TheCrypto_B",
   publisher: "TheCrypto_B",
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',

@@ -150,10 +150,10 @@ export default function Sidebar() {
             {!isCollapsed && (
               <button
                 onClick={togglePin}
-                className="hidden md:flex items-center justify-center w-8 h-8 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 border border-cyan-400/30 hover:border-cyan-400/60 text-cyan-400 hover:shadow-[0_0_10px_rgba(6,182,212,0.4)] transition-all duration-300 absolute top-2 right-2 group"
+                className="hidden md:flex items-center justify-center w-11 h-11 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 border border-cyan-400/30 hover:border-cyan-400/60 text-cyan-400 hover:shadow-[0_0_10px_rgba(6,182,212,0.4)] transition-all duration-300 absolute top-2 right-2 group"
                 title={isPinned ? 'Unlock Sidebar' : 'Lock Sidebar'}
               >
-                {isPinned ? <Pin className="w-4 h-4 group-hover:scale-110 transition-transform" /> : <PinOff className="w-4 h-4 group-hover:scale-110 transition-transform" />}
+                {isPinned ? <Pin className="w-5 h-5 group-hover:scale-110 transition-transform" /> : <PinOff className="w-5 h-5 group-hover:scale-110 transition-transform" />}
               </button>
             )}
           </div>

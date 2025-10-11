@@ -70,13 +70,13 @@ export default function WidgetsPage() {
                   <p className="text-sm text-gray-500">See how the widget looks in real-time</p>
                 </div>
 
-                <div className="bg-slate-950/80 rounded-xl p-6 flex justify-center items-center border border-white/5 group">
+                <div className="bg-slate-950/80 rounded-xl p-6 flex justify-center items-center border border-white/5 group overflow-hidden">
                   <iframe
                     src={`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/widget/btc`}
                     width={widgetSizes[widgetSize].width}
                     height={widgetSizes[widgetSize].height}
-                    className="rounded-xl shadow-[0_0_20px_rgba(0,212,242,0.1)] transition-transform duration-300 group-hover:scale-[1.02]"
-                    style={{ border: 'none', maxWidth: '100%' }}
+                    className="rounded-xl shadow-[0_0_20px_rgba(0,212,242,0.1)] transition-transform duration-300 group-hover:scale-[1.02] max-w-full"
+                    style={{ border: 'none' }}
                     title="TheCrypto_B Live BTC Tracker"
                   />
                 </div>

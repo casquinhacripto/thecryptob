@@ -127,7 +127,7 @@ export default function LiveBitcoinPrice() {
 
           <div className="flex items-start">
             {/* Dollar Sign - Smaller and Elevated */}
-            <span className={`text-5xl md:text-7xl font-bold opacity-80 mr-2 -translate-y-2 md:-translate-y-4 transition-colors duration-300 ${
+            <span className={`text-4xl sm:text-5xl md:text-7xl font-bold opacity-80 mr-2 -translate-y-2 md:-translate-y-4 transition-colors duration-300 ${
               priceDirection === 'up' ? 'text-green-400' : priceDirection === 'down' ? 'text-red-400' : ''
             }`}>$</span>
 
@@ -135,7 +135,7 @@ export default function LiveBitcoinPrice() {
               priceDirection === 'up' ? 'text-green-400' : priceDirection === 'down' ? 'text-red-400' : ''
             }`}>
               {/* Whole Number - Bold with Enhanced Shadow/Glow */}
-              <span className={`text-7xl md:text-[12rem] tracking-tight font-extrabold transition-all duration-300 ${
+              <span className={`text-6xl sm:text-7xl md:text-[12rem] tracking-tight font-extrabold transition-all duration-300 ${
                 priceDirection === 'up'
                   ? 'drop-shadow-[0_0_30px_rgba(34,197,94,0.5)]'
                   : priceDirection === 'down'
@@ -145,7 +145,7 @@ export default function LiveBitcoinPrice() {
                 {whole}
               </span>
               {/* Decimals - Lighter Weight for Hierarchy */}
-              <span className="text-5xl md:text-7xl opacity-70 animate-pulse ml-1 md:ml-2 font-bold">
+              <span className="text-4xl sm:text-5xl md:text-7xl opacity-70 animate-pulse ml-1 md:ml-2 font-bold">
                 .{cents}
               </span>
             </div>
