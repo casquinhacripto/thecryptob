@@ -1,0 +1,47 @@
+steps:
+  # Build the container image with build arguments
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_SITE_URL=https://thecryptob.com'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_GA_MEASUREMENT_ID=G-3PW6GGDX6F'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/thecryptob:$COMMIT_SHA'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/thecryptob:latest'
+      - '.'
+
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/thecryptob:$COMMIT_SHA']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/thecryptob:latest']
+
+  # Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'thecryptob'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/thecryptob:$COMMIT_SHA'
+      - '--region'
+      - 'europe-west1'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+      - '--set-env-vars'
+      - 'NEXT_PUBLIC_SITE_URL=https://thecryptob.com,NEXT_PUBLIC_GA_MEASUREMENT_ID=G-3PW6GGDX6F'
+      - '--port'
+      - '3000'
+
+images:
+  - 'gcr.io/$PROJECT_ID/thecryptob:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/thecryptob:latest'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
