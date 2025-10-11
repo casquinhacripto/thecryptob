@@ -20,7 +20,7 @@ function LayoutContent({ children }: { children: ReactNode }) {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const marginLeft = isMobile ? '0' : (isCollapsed ? '80px' : '256px');
+  const marginLeft = isMobile ? '0' : (isCollapsed ? '96px' : '256px');
   const paddingLeft = isMobile ? '0' : (isCollapsed ? '32px' : '0');
 
   return (

@@ -3,180 +3,180 @@ import { Code, TrendingUp, Heart, Target } from 'lucide-react';
 export default function AboutPage() {
   return (
     <div className="min-h-screen">
-      <div className="container mx-auto px-4 py-12">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-            About TheCrypto_B
-          </h1>
-          <p className="text-2xl text-slate-400">
-            Builder. Trader. Creator.
+      {/* Background Gradients */}
+      <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_center,#0E0E10_40%,#060606_100%)]"></div>
+      <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(0,212,242,0.1)_0%,transparent_70%)]"></div>
+      <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom_left,rgba(0,212,242,0.05)_0%,transparent_60%)]"></div>
+
+      <main className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-16 md:pt-24 pb-32">
+        {/* Page Header - Enhanced with Premium Styling (Matching Apps/Widgets Pages) */}
+        <div className="mb-24 md:mb-32 animate-[fadeIn_0.6s_ease-out]">
+          <div className="h-6"></div>
+          <div className="inline-block mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent tracking-tight leading-none mb-4 hover:scale-105 transition-transform duration-300 cursor-default">
+              About <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">TheCrypto_B</span>
+            </h1>
+            <div className="h-1 bg-gradient-to-r from-cyan-400/60 via-blue-400/40 to-transparent rounded-full animate-[shimmer_3s_ease-in-out_infinite]"></div>
+          </div>
+          <p className="text-white/70 text-lg md:text-xl leading-relaxed font-light max-w-3xl ml-0 md:ml-1 mb-4">
+            Builder. Trader. Creator. ⚡
           </p>
+          <p className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 text-sm md:text-base font-semibold tracking-wide ml-0 md:ml-1 mb-8">
+            Building free tools for the crypto community, no paywalls, just passion.
+          </p>
+          <div className="w-32 h-[2px] bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full ml-0 md:ml-1 shadow-[0_0_10px_rgba(6,182,212,0.5)]"></div>
+          <div className="h-6"></div>
         </div>
 
         {/* Main Content */}
-        <div className="max-w-4xl mx-auto space-y-8">
-          {/* Who I Am */}
-          <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/20 rounded-2xl p-8">
-            <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
-              <span>👋</span> Who I Am
-            </h2>
-            <div className="text-slate-300 space-y-4 text-lg">
-              <p>
-                I'm <span className="text-cyan-300 font-semibold">TheCrypto_B</span>, a full-stack developer and crypto enthusiast building free tools for the community.
-              </p>
-              <p>
-                I believe in transparency, accessibility, and the power of open tools. Every project I build is designed to solve real problems and help people navigate the crypto space.
+        <div className="space-y-16 md:space-y-20">
+          {/* Who I Am - Two Column Layout */}
+          <section className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8 items-start">
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-2xl md:text-3xl font-semibold text-white flex items-center gap-3 mb-3">
+                  <span>👋</span> Who I Am
+                </h2>
+                <div className="h-[1px] w-24 bg-gradient-to-r from-cyan-400/60 to-transparent"></div>
+              </div>
+
+              <div className="text-white/70 space-y-5 text-base md:text-lg leading-relaxed max-w-[850px]">
+                <div className="h-8"></div>
+                <p>
+                  I've been in crypto since mid-2021, and like any newbie, I went through everything you can imagine from getting my wallets drained to losing all my money and believing I'd become a millionaire on my first meme trade.
+                </p>
+
+                <p>
+                  But through all those ups and downs, I fell in love with crypto. Instead of giving up, I decided to study, learn, and truly understand the space. Since then, I've been in the crypto trenches 24/7, learning, building, and growing with the community.
+                </p>
+
+                <p>
+                  I started a <span className="text-red-400 font-semibold">YouTube channel</span> and became active on <span className="text-cyan-400 font-semibold">X</span> and <span className="text-blue-400 font-semibold">CoinMarketCap</span> to share what I've learned and help others onboard into crypto, hopefully helping them avoid the same hard lessons I faced when I started.
+                </p>
+
+                <p>
+                  With this passion, I discovered a love for building and creating new tools. And now, with the help of AI, many of my ideas are finally coming to life. My goal is simple: to keep building tools, sharing knowledge, and helping as many people as possible along the way. 💙
+                </p>
+
+                <div className="h-8"></div>
+
+                <p className="text-cyan-300/80 italic text-base border-l-2 border-cyan-400/40 pl-4 mt-8 pt-2 mb-8">
+                  "The more I build, the more I realize, crypto isn't just about charts, it's about people."
+                </p>
+
+                <div className="h-8"></div>
+              </div>
+            </div>
+
+            <div className="p-6 rounded-xl bg-[#0a0a0a]/80 backdrop-blur-xl border border-white/10 hover:border-cyan-400/40 text-center shadow-[0_0_20px_#00ffff10] transition-all duration-300">
+              <p className="text-gray-500 text-sm mb-2">Current Focus</p>
+              <p className="text-xl md:text-2xl font-semibold bg-gradient-to-r from-cyan-300 to-purple-300 bg-clip-text text-transparent">
+                Web3 Tools & AI Integration
               </p>
             </div>
-          </div>
+          </section>
 
-          {/* What I Believe */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/20 rounded-2xl p-6 hover:border-cyan-400/50 transition-all">
-              <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center mb-4">
+          {/* What I Believe - Feature Cards */}
+          <div className="grid sm:grid-cols-2 gap-6 md:gap-8">
+            <div className="p-6 md:p-8 rounded-xl bg-[#0a0a0a]/70 backdrop-blur-xl border border-white/10 hover:border-cyan-400/50 hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] transition-all duration-300 group">
+              <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                 <Heart className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">Free Tools for Everyone</h3>
-              <p className="text-slate-400">
-                No paywalls, no premium tiers. Just quality tools that everyone can use.
+              <h3 className="text-xl font-semibold text-white mb-3">🧰 Free Tools for Everyone</h3>
+              <p className="text-gray-400 text-sm md:text-base leading-relaxed">
+                No paywalls, no premium tiers — just quality tools for all.
               </p>
             </div>
 
-            <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/20 rounded-2xl p-6 hover:border-cyan-400/50 transition-all">
-              <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center mb-4">
+            <div className="p-6 md:p-8 rounded-xl bg-[#0a0a0a]/70 backdrop-blur-xl border border-white/10 hover:border-emerald-400/50 hover:shadow-[0_0_30px_rgba(16,185,129,0.15)] transition-all duration-300 group">
+              <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                 <Code className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">Transparency in Development</h3>
-              <p className="text-slate-400">
-                Share the journey, the wins, and the failures. Build in public.
+              <h3 className="text-xl font-semibold text-white mb-3">🌍 Transparency in Development</h3>
+              <p className="text-gray-400 text-sm md:text-base leading-relaxed">
+                Sharing both the wins and the failures. Building in public.
               </p>
             </div>
 
-            <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/20 rounded-2xl p-6 hover:border-cyan-400/50 transition-all">
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center mb-4">
+            <div className="p-6 md:p-8 rounded-xl bg-[#0a0a0a]/70 backdrop-blur-xl border border-white/10 hover:border-purple-400/50 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] transition-all duration-300 group">
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                 <TrendingUp className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">Mobile-First Experiences</h3>
-              <p className="text-slate-400">
+              <h3 className="text-xl font-semibold text-white mb-3">📱 Mobile-First Experiences</h3>
+              <p className="text-gray-400 text-sm md:text-base leading-relaxed">
                 The future is mobile. All new apps are designed for on-the-go use.
               </p>
             </div>
 
-            <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/20 rounded-2xl p-6 hover:border-cyan-400/50 transition-all">
-              <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center mb-4">
+            <div className="p-6 md:p-8 rounded-xl bg-[#0a0a0a]/70 backdrop-blur-xl border border-white/10 hover:border-orange-400/50 hover:shadow-[0_0_30px_rgba(249,115,22,0.15)] transition-all duration-300 group">
+              <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                 <Target className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">Passion Over Profit</h3>
-              <p className="text-slate-400">
+              <h3 className="text-xl font-semibold text-white mb-3">❤️ Passion Over Profit</h3>
+              <p className="text-gray-400 text-sm md:text-base leading-relaxed">
                 Building because I love it, not because I have to monetize everything.
               </p>
             </div>
           </div>
 
-          {/* Find Me Online */}
-          <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/20 rounded-2xl p-8">
-            <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
-              <span>🌐</span> Find Me Online
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <a
-                href={process.env.NEXT_PUBLIC_TWITTER_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 px-6 py-4 bg-slate-800/50 hover:bg-slate-700/50 border border-cyan-500/30 hover:border-cyan-400/50 rounded-lg transition-all group"
-              >
-                <svg className="w-6 h-6 text-cyan-400" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
-                <div>
-                  <div className="text-white font-semibold group-hover:text-cyan-300 transition-colors">Twitter</div>
-                  <div className="text-xs text-slate-400">@TheCrypto_B</div>
-                </div>
-              </a>
+          <div className="h-8"></div>
+          <div className="h-8"></div>
 
-              <a
-                href={process.env.NEXT_PUBLIC_YOUTUBE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 px-6 py-4 bg-slate-800/50 hover:bg-slate-700/50 border border-cyan-500/30 hover:border-cyan-400/50 rounded-lg transition-all group"
-              >
-                <svg className="w-6 h-6 text-red-400" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-                </svg>
-                <div>
-                  <div className="text-white font-semibold group-hover:text-cyan-300 transition-colors">YouTube</div>
-                  <div className="text-xs text-slate-400">@Crypto_B</div>
-                </div>
-              </a>
-
-              <a
-                href={process.env.NEXT_PUBLIC_CMC_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 px-6 py-4 bg-slate-800/50 hover:bg-slate-700/50 border border-cyan-500/30 hover:border-cyan-400/50 rounded-lg transition-all group"
-              >
-                <svg className="w-6 h-6 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20.12 11.95c-.23-1.14-1.08-1.88-2.23-1.88-.87 0-1.62.47-2.05 1.18l-.03-.09c-.24-.66-.89-1.09-1.62-1.09-.77 0-1.45.48-1.79 1.22v-.97h-1.39v6.36h1.45v-3.26c0-.88.54-1.47 1.31-1.47.74 0 1.14.51 1.14 1.43v3.3h1.45v-3.26c0-.88.54-1.47 1.31-1.47.74 0 1.14.51 1.14 1.43v3.3H20v-3.62c0-.43-.02-.85-.08-1.11zM7.71 15.68c-1.64 0-2.82-1.26-2.82-2.95s1.18-2.95 2.82-2.95c1.01 0 1.88.51 2.36 1.28l-1.11.74c-.28-.42-.76-.69-1.25-.69-.96 0-1.61.72-1.61 1.62s.65 1.62 1.61 1.62c.49 0 .97-.27 1.25-.69l1.11.74c-.48.77-1.35 1.28-2.36 1.28z" />
-                </svg>
-                <div>
-                  <div className="text-white font-semibold group-hover:text-cyan-300 transition-colors">CoinMarketCap</div>
-                  <div className="text-xs text-slate-400">TheCrypto_B</div>
-                </div>
-              </a>
-            </div>
-          </div>
-
-          {/* Stats */}
-          <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-2xl p-8">
-            <h2 className="text-3xl font-bold text-white mb-6 text-center">
-              📊 Stats
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              <div className="text-center">
-                <div className="text-4xl font-bold text-cyan-400 mb-2">5</div>
-                <div className="text-sm text-slate-400">Projects Built</div>
+          {/* Stats Section */}
+          <section className="mt-16 mb-24">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
+              <div className="group">
+                <p className="text-4xl md:text-5xl font-bold text-cyan-400 group-hover:scale-110 transition-transform">5</p>
+                <p className="text-gray-400 text-sm mt-2">Projects Built</p>
               </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-cyan-400 mb-2">10K+</div>
-                <div className="text-sm text-slate-400">Lines of Code</div>
+              <div className="group">
+                <p className="text-4xl md:text-5xl font-bold text-cyan-400 group-hover:scale-110 transition-transform">10K+</p>
+                <p className="text-gray-400 text-sm mt-2">Lines of Code</p>
               </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-cyan-400 mb-2">100%</div>
-                <div className="text-sm text-slate-400">Free Tools</div>
+              <div className="group">
+                <p className="text-4xl md:text-5xl font-bold text-cyan-400 group-hover:scale-110 transition-transform">100%</p>
+                <p className="text-gray-400 text-sm mt-2">Free Tools</p>
               </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-cyan-400 mb-2">∞</div>
-                <div className="text-sm text-slate-400">Passion</div>
+              <div className="group">
+                <p className="text-4xl md:text-5xl font-bold text-cyan-400 group-hover:scale-110 transition-transform">∞</p>
+                <p className="text-gray-400 text-sm mt-2">Passion</p>
               </div>
             </div>
-          </div>
+          </section>
 
-          {/* Contact CTA */}
-          <div className="text-center">
-            <h3 className="text-2xl font-bold text-white mb-4">Want to Collaborate?</h3>
-            <p className="text-slate-400 mb-6">
-              Always open to interesting projects and partnerships
-            </p>
-            <a
-              href={process.env.NEXT_PUBLIC_TWITTER_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold rounded-lg transition-all duration-300"
-            >
-              DM Me on Twitter
-            </a>
-          </div>
-        </div>
-      </div>
+          <div className="h-8"></div>
 
-      {/* Footer */}
-      <footer className="border-t border-slate-800 py-8 mt-20">
-        <div className="container mx-auto px-4 text-center text-slate-500">
-          <p>© 2025 TheCrypto_B. Built with ❤️ for the crypto community.</p>
-          <p className="text-sm mt-2">100% Free. No Paywalls. Just Passion.</p>
+          {/* Divider */}
+          <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent mb-20"></div>
+
+          {/* Collaboration Section - Page Outro */}
+          <section className="relative text-center mb-24">
+            {/* Ambient Glow Background */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400/5 to-transparent blur-3xl pointer-events-none"></div>
+
+            {/* Content */}
+            <div className="relative z-10">
+              <h3 className="text-2xl md:text-3xl font-semibold text-white mb-4">🤝 Want to Collaborate?</h3>
+              <p className="text-gray-400 text-sm md:text-base max-w-[600px] mx-auto leading-relaxed mb-8 text-center">
+                Always open to interesting projects, creative partnerships, and new opportunities in Web3 and AI innovation.
+              </p>
+              <a
+                href={process.env.NEXT_PUBLIC_TWITTER_URL || '#'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-6 py-2.5 rounded-lg border border-cyan-400/50 text-cyan-300 font-medium hover:bg-cyan-400/10 hover:border-cyan-400 transition-all duration-300 shadow-[0_0_20px_#00ffff10] hover:shadow-[0_0_30px_#00ffff20]"
+              >
+                DM Me on X
+              </a>
+            </div>
+          </section>
+
+          {/* Footer Signature */}
+          <p className="text-gray-500 text-xs text-center mt-16">
+            © 2025 <span className="text-cyan-400 font-semibold">TheCrypto_B</span>. Built with 💙 for builders, dreamers, and innovators.
+          </p>
         </div>
-      </footer>
+      </main>
     </div>
   );
 }

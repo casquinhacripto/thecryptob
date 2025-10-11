@@ -1,0 +1,58 @@
+# Dependencies
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Next.js
+.next
+out
+build
+dist
+
+# Testing
+coverage
+.nyc_output
+
+# Environment files (will be set by Cloud Run)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+*.md
+!README.md
+.editorconfig
+.eslintcache
+
+# Documentation
+DEVELOPMENT_GUIDE.md
+LAYOUT_FIXES_SUMMARY.md
+URGENT_LAYOUT_AUDIT.md
+THECRYPTOB_HUB_MASTER_DOCUMENTATION.md
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts

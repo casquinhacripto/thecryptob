@@ -29,7 +29,7 @@ const TikTokIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-// Organized menu structure with sections
+// Organized menu structure with sections - Enhanced Premium Layout
 const menuSections = [
   {
     title: 'MAIN',
@@ -37,7 +37,7 @@ const menuSections = [
       { icon: Home, label: 'Home', href: '/' },
       { icon: Grid3x3, label: 'Apps', href: '/apps' },
       { icon: Heart, label: 'Support', href: '/support' },
-      { icon: BookOpen, label: 'Alpha Feed', href: '/alpha' },
+      { icon: BookOpen, label: 'Widgets', href: '/widgets' },
       { icon: Info, label: 'About', href: '/about' },
     ]
   },
@@ -45,9 +45,9 @@ const menuSections = [
     title: 'COMMUNITY',
     items: [
       { icon: TwitterIcon, label: 'X', href: process.env.NEXT_PUBLIC_TWITTER_URL || 'https://x.com', external: true },
-      { icon: YoutubeIcon, label: 'Youtube', href: process.env.NEXT_PUBLIC_YOUTUBE_URL || 'https://youtube.com', external: true },
+      { icon: YoutubeIcon, label: 'YouTube', href: process.env.NEXT_PUBLIC_YOUTUBE_URL || 'https://youtube.com', external: true },
       { icon: CMCIcon, label: 'CMC', href: process.env.NEXT_PUBLIC_CMC_URL || 'https://coinmarketcap.com', external: true },
-      { icon: TikTokIcon, label: 'TikTok', href: 'https://tiktok.com', external: true },
+      { icon: TikTokIcon, label: 'TikTok', href: 'https://www.tiktok.com/@the_crypto_b', external: true },
     ]
   }
 ];
@@ -106,17 +106,17 @@ export default function Sidebar() {
           shadow-[2px_0_10px_rgba(0,0,0,0.5),0_0_25px_-5px_rgba(0,212,242,0.15)]
           shadow-inner shadow-black/40
           transition-all duration-300 ease-in-out
-          ${isCollapsed ? 'w-20' : 'w-56'}
+          ${isCollapsed ? 'w-24' : 'w-56'}
           ${isMobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         `}
       >
         {/* Inner wrapper - controls all content padding */}
         <div className="flex flex-col h-full w-full">
-          <div className={`w-full flex flex-col h-full ${isCollapsed ? 'px-0' : 'px-6'}`}>
-            {/* Header - Logo Section with CryptoSmart-Inspired Spacing */}
+          <div className={`w-full flex flex-col h-full ${isCollapsed ? 'px-3' : 'px-6'}`}>
+            {/* Header - Logo Section with Enhanced Spacing */}
             <div
-              className={`mb-0 relative border-b border-white/[0.06] ${isCollapsed ? 'px-2' : ''}`}
-              style={{ paddingTop: '44px', paddingBottom: '36px' }}
+              className={`mb-0 relative border-b border-white/5`}
+              style={{ paddingTop: '32px', paddingBottom: '24px' }}
             >
           {/* Enhanced Radial Glow Behind Logo */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[radial-gradient(circle_at_center,rgba(255,165,0,0.15)_0%,transparent_70%)] blur-3xl pointer-events-none animate-[pulse_4s_ease-in-out_infinite]"></div>
@@ -150,36 +150,36 @@ export default function Sidebar() {
             {!isCollapsed && (
               <button
                 onClick={togglePin}
-                className="hidden md:flex items-center justify-center w-8 h-8 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 border border-[#00d4f2]/30 hover:border-[#00d4f2]/50 text-[#00d4f2] transition-all absolute top-2 right-2"
-                title={isPinned ? 'Unpin sidebar' : 'Pin sidebar'}
+                className="hidden md:flex items-center justify-center w-8 h-8 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 border border-cyan-400/30 hover:border-cyan-400/60 text-cyan-400 hover:shadow-[0_0_10px_rgba(6,182,212,0.4)] transition-all duration-300 absolute top-2 right-2 group"
+                title={isPinned ? 'Unlock Sidebar' : 'Lock Sidebar'}
               >
-                {isPinned ? <Pin className="w-4 h-4" /> : <PinOff className="w-4 h-4" />}
+                {isPinned ? <Pin className="w-4 h-4 group-hover:scale-110 transition-transform" /> : <PinOff className="w-4 h-4 group-hover:scale-110 transition-transform" />}
               </button>
             )}
           </div>
         </div>
 
             {/* Navigation with Professional Zoned Structure */}
-            <nav className="flex-1 overflow-y-auto" style={{ marginTop: '20px' }}>
+            <nav className="flex-1 overflow-y-auto" style={{ marginTop: '24px' }}>
               {menuSections.map((section, sectionIndex) => (
               <div key={section.title}>
                 {/* Subtle divider between sections */}
                 {sectionIndex > 0 && !isCollapsed && (
-                  <div className="border-t border-white/5 my-8"></div>
+                  <div className="border-t border-white/5 my-10"></div>
                 )}
 
                 <div className={sectionIndex > 0 && isCollapsed ? 'mt-10' : ''}>
-                  {/* Section Header - CryptoSmart Style */}
+                  {/* Section Header - Premium Enhanced Style */}
                   {!isCollapsed && (
-                    <div className="mb-2">
-                      <h3 className="text-[11px] font-bold tracking-[1.5px] text-[#7A7F88] uppercase">
+                    <div className={`mb-3 ${sectionIndex > 0 ? 'mt-2' : ''}`}>
+                      <h3 className="text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase opacity-60 px-1">
                         {section.title}
                       </h3>
                     </div>
                   )}
 
                 {/* Section Items with proper spacing */}
-                <div className="space-y-5">
+                <div className="space-y-2">
                 {section.items.map((item) => {
                   const Icon = item.icon;
                   const isActive = pathname === item.href;
@@ -197,30 +197,25 @@ export default function Sidebar() {
                       {...linkProps}
                       onClick={() => setIsMobileOpen(false)}
                       className={`
-                        relative flex items-center rounded-xl h-10
-                        transition-all duration-200 ease-in-out group overflow-hidden
-                        ${isCollapsed ? 'justify-center px-4' : 'gap-4 pl-4 pr-4'}
+                        relative flex items-center rounded-r-lg h-10
+                        transition-all duration-300 ease-in-out group overflow-hidden
+                        ${isCollapsed ? 'justify-center px-2' : 'gap-3 pl-5 pr-4'}
                         ${
                           isActive
-                            ? 'bg-gradient-to-r from-[rgba(255,165,0,0.2)] to-[rgba(255,165,0,0.05)] text-white shadow-[0_0_10px_rgba(255,165,0,0.2)]'
-                            : 'text-gray-400 hover:text-[#00d4f2] hover:bg-gradient-to-r hover:from-white/10 hover:to-transparent'
+                            ? 'bg-gradient-to-r from-cyan-500/20 to-purple-500/10 text-white shadow-[0_0_8px_rgba(6,182,212,0.3)] border-l-2 border-cyan-400'
+                            : 'text-gray-300 hover:text-white hover:bg-white/5 hover:shadow-[0_0_6px_rgba(6,182,212,0.1)]'
                         }
                       `}
                     >
-                      {/* Premium Left Border - 3px */}
-                      <div className={`absolute left-0 w-[3px] h-full bg-[#FFA500] transition-all duration-300 ease-in-out origin-top rounded-r ${
-                        isActive ? 'scale-y-100 shadow-[0_0_10px_rgba(255,165,0,0.6)]' : 'scale-y-0 group-hover:scale-y-50'
-                      }`}></div>
-
                       {/* Icon with Hover Scale + Glow */}
                       <div className="relative flex items-center justify-center">
                         {isActive && (
-                          <div className="absolute inset-0 bg-[#ff7f30] rounded-lg blur-md opacity-40 animate-pulse"></div>
+                          <div className="absolute inset-0 bg-cyan-400 rounded-lg blur-md opacity-30 animate-pulse"></div>
                         )}
-                        <Icon className={`w-5 h-5 flex-shrink-0 relative z-10 transition-all duration-300 ease-in-out group-hover:scale-105 ${
+                        <Icon className={`w-5 h-5 flex-shrink-0 relative z-10 transition-all duration-300 ease-in-out group-hover:scale-110 ${
                           isActive
-                            ? 'text-[#FFA500] drop-shadow-[0_0_8px_rgba(255,165,0,0.8)]'
-                            : 'text-gray-500 group-hover:text-[#00d4f2] group-hover:drop-shadow-[0_0_6px_rgba(0,212,242,0.4)]'
+                            ? 'text-cyan-400 drop-shadow-[0_0_10px_rgba(6,182,212,0.6)]'
+                            : 'text-gray-500 group-hover:text-cyan-400 group-hover:drop-shadow-[0_0_8px_rgba(6,182,212,0.4)]'
                         }`} />
                       </div>
 
@@ -244,12 +239,12 @@ export default function Sidebar() {
             {/* Footer - Version */}
             <div className="mt-auto p-6 border-t border-white/5">
           {!isCollapsed ? (
-            <div className="text-xs text-center text-[#7A7F88] font-medium tracking-wider">
+            <div className="text-[10px] text-center text-gray-500 font-medium tracking-wide opacity-50 uppercase">
               v1.0.0
             </div>
           ) : (
             <div className="flex justify-center">
-              <div className="w-2 h-2 rounded-full bg-gradient-to-r from-[#00d4f2] to-[#ff7f30] animate-pulse"></div>
+              <div className="w-2 h-2 rounded-full bg-gradient-to-r from-cyan-400 to-purple-400 animate-pulse"></div>
             </div>
           )}
             </div>

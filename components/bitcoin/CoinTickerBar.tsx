@@ -35,8 +35,8 @@ export default function CoinTickerBar() {
   }
 
   return (
-    <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/20 rounded-xl py-3 px-4 overflow-hidden">
-      <div className="flex items-center gap-8 animate-[scroll_120s_linear_infinite]">
+    <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/20 rounded-xl py-3 px-4 overflow-hidden hover:border-cyan-500/40 transition-all duration-300 shadow-[0_4px_20px_rgba(6,182,212,0.1)] hover:shadow-[0_4px_30px_rgba(6,182,212,0.2)]">
+      <div className="flex items-center gap-8 animate-[scroll_120s_linear_infinite] hover:[animation-play-state:paused]">
         {/* Duplicate coins for seamless loop */}
         {[...coins, ...coins].map((coin, index) => {
           const isPositive = coin.change24h > 0;
@@ -44,16 +44,17 @@ export default function CoinTickerBar() {
           return (
             <div
               key={`${coin.id}-${index}`}
-              className="flex items-center gap-3 min-w-fit whitespace-nowrap group cursor-pointer hover:opacity-80 transition-opacity"
+              className="flex items-center gap-3 min-w-fit whitespace-nowrap group cursor-pointer hover:scale-110 transition-all duration-300 hover:bg-white/5 px-3 py-2 rounded-lg"
+              title={`Click to view ${coin.symbol} details`}
             >
-              {/* Coin Symbol */}
-              <span className="text-cyan-300 font-bold text-sm">
+              {/* Coin Symbol with glow effect */}
+              <span className="text-cyan-300 font-bold text-sm group-hover:text-cyan-200 transition-colors duration-300 drop-shadow-[0_0_8px_rgba(6,182,212,0.6)]">
                 {coin.symbol}
               </span>
 
               {/* Sparkline Chart */}
               {coin.sparkline && coin.sparkline.length > 0 && (
-                <div className="opacity-70 group-hover:opacity-100 transition-opacity">
+                <div className="opacity-70 group-hover:opacity-100 transition-opacity duration-300 group-hover:drop-shadow-[0_0_8px_rgba(6,182,212,0.4)]">
                   <Sparkline
                     data={coin.sparkline}
                     width={60}
@@ -64,29 +65,34 @@ export default function CoinTickerBar() {
               )}
 
               {/* Price */}
-              <span className="text-white font-mono font-semibold text-sm">
+              <span className="text-white font-mono font-semibold text-sm group-hover:text-cyan-100 transition-colors duration-300">
                 ${coin.price.toLocaleString('en-US', {
                   minimumFractionDigits: coin.price < 1 ? 4 : 2,
                   maximumFractionDigits: coin.price < 1 ? 4 : 2,
                 })}
               </span>
 
-              {/* Change with Icon */}
+              {/* Change with Icon - Enhanced with glow */}
               <div
-                className={`flex items-center gap-1 font-mono font-semibold text-sm ${
-                  isPositive ? 'text-emerald-400' : 'text-red-400'
+                className={`flex items-center gap-1 font-mono font-semibold text-sm transition-all duration-300 ${
+                  isPositive
+                    ? 'text-emerald-400 group-hover:text-emerald-300 group-hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]'
+                    : 'text-red-400 group-hover:text-red-300 group-hover:drop-shadow-[0_0_8px_rgba(239,68,68,0.6)]'
                 }`}
               >
                 {isPositive ? (
-                  <TrendingUp className="w-4 h-4" />
+                  <TrendingUp className="w-4 h-4 group-hover:animate-pulse" />
                 ) : (
-                  <TrendingDown className="w-4 h-4" />
+                  <TrendingDown className="w-4 h-4 group-hover:animate-pulse" />
                 )}
                 <span>
                   {isPositive ? '+' : ''}
                   {coin.change24h.toFixed(2)}%
                 </span>
               </div>
+
+              {/* Subtle hover indicator */}
+              <div className="hidden group-hover:block absolute -bottom-1 left-1/2 -translate-x-1/2 w-1/2 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent rounded-full"></div>
             </div>
           );
         })}

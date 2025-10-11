@@ -1,13 +1,17 @@
 import { Grid3x3, Sparkles, TrendingUp, Calculator, Eye } from 'lucide-react';
+import Image from 'next/image';
 
 const projects = [
   {
     name: 'Memify',
+    emoji: '🎭',
+    logo: '/memify-logo.png',
     tagline: 'AI Meme & Content Creator',
     description: 'Create viral memes with AI in seconds. Choose templates, add captions, generate GIFs, and share instantly.',
     icon: Sparkles,
     gradient: 'from-purple-500 to-pink-500',
     status: 'coming-soon',
+    category: 'AI',
     tags: ['AI', 'Mobile', 'React Native'],
     links: {
       waitlist: '#',
@@ -15,11 +19,14 @@ const projects = [
   },
   {
     name: 'Life Coin Tracker',
+    emoji: '🪙',
+    logo: '/lifecoin-logo.png',
     tagline: 'Track Your 86,400 Daily Coins',
     description: 'Every day you have 86,400 seconds. Track habits, goals, and productivity with gamified time tracking.',
     icon: TrendingUp,
     gradient: 'from-emerald-500 to-teal-500',
-    status: 'development',
+    status: 'coming-soon',
+    category: 'Productivity',
     tags: ['Productivity', 'Mobile', 'Gamification'],
     links: {
       waitlist: '#',
@@ -27,35 +34,44 @@ const projects = [
   },
   {
     name: 'FormulaFin',
+    emoji: '📊',
+    logo: '/formulafin-logo.png',
     tagline: 'Universal Formula Finder',
     description: 'Calculate anything: trading profits, APY, position sizing, risk/reward, DCA strategies. Your pocket financial calculator.',
     icon: Calculator,
     gradient: 'from-blue-500 to-cyan-500',
-    status: 'beta',
+    status: 'coming-soon',
+    category: 'Finance',
     tags: ['Finance', 'Tools', 'Mobile'],
     links: {
       demo: '#',
     },
   },
   {
-    name: 'CryptoSmartSignal',
-    tagline: 'Next-Gen Crypto Signals',
+    name: 'CryptoSmartApp',
+    emoji: '🧠',
+    logo: '/cryptosmartapp-logo.png',
+    tagline: 'Next-Gen Crypto Intelligence',
     description: 'AI-powered trading signals, market screener, degen terminal, and portfolio tracking for serious crypto traders.',
     icon: TrendingUp,
     gradient: 'from-orange-500 to-red-500',
-    status: 'development',
-    tags: ['Crypto', 'Trading', 'Web'],
+    status: 'coming-soon',
+    category: 'Trading',
+    tags: ['Crypto', 'Trading', 'AI'],
     links: {
       github: '#',
     },
   },
   {
     name: 'VisionNote',
+    emoji: '👁️',
+    logo: '/visionnote-logo.png',
     tagline: 'Visual Note-Taking',
     description: 'Sketch, draw, annotate, and organize ideas visually. Perfect for brainstorming, mind maps, and creative work.',
     icon: Eye,
     gradient: 'from-indigo-500 to-purple-500',
-    status: 'live',
+    status: 'coming-soon',
+    category: 'Productivity',
     tags: ['Productivity', 'Design', 'Mobile'],
     links: {
       demo: '#',
@@ -72,67 +88,110 @@ export default function AppsPage() {
       <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom_left,rgba(0,212,242,0.05)_0%,transparent_60%)]"></div>
 
       <main className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-16 md:pt-24 pb-32">
-        {/* Page Header - Left aligned with premium spacing */}
-        <div className="space-y-6 md:space-y-8 mb-12 md:mb-16">
-          <div className="inline-block">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent tracking-tight leading-none mb-3">
+        {/* Page Header - Enhanced with Premium Styling */}
+        <div className="mb-24 md:mb-32 animate-[fadeIn_0.6s_ease-out]">
+          <div className="h-6"></div>
+          <div className="inline-block mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent tracking-tight leading-none mb-4 hover:scale-105 transition-transform duration-300 cursor-default">
               My Apps
             </h1>
-            <div className="h-1 bg-gradient-to-r from-cyan-400/60 via-blue-400/40 to-transparent rounded-full"></div>
+            <div className="h-1 bg-gradient-to-r from-cyan-400/60 via-blue-400/40 to-transparent rounded-full animate-[shimmer_3s_ease-in-out_infinite]"></div>
           </div>
-          <p className="text-white/60 text-sm md:text-base lg:text-lg leading-relaxed font-light max-w-3xl mb-16 md:mb-24 ml-0 md:ml-8">
-            A collection of intelligent tools for creators, traders, and innovators, crafted with passion.
+          <p className="text-white/70 text-base md:text-lg leading-relaxed font-light max-w-3xl ml-0 md:ml-1 mb-4">
+            A collection of intelligent tools for creators, traders, and innovators — crafted with passion.
           </p>
+          <p className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 text-sm md:text-base font-semibold tracking-wide ml-0 md:ml-1 mb-8">
+            Built for traders. Powered by creativity. Designed for the future of Web3.
+          </p>
+          <div className="w-32 h-[2px] bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full ml-0 md:ml-1 shadow-[0_0_10px_rgba(6,182,212,0.5)]"></div>
+          <div className="h-6"></div>
         </div>
 
         {/* Projects Grid - Generous spacing */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-10 gap-y-10 md:gap-y-14">
-          {projects.map((project) => {
+          {projects.map((project, index) => {
             const Icon = project.icon;
             const statusConfig = {
-              live: { label: 'LIVE', color: 'emerald', glow: 'emerald' },
-              beta: { label: 'BETA', color: 'yellow', glow: 'yellow' },
-              'coming-soon': { label: 'COMING SOON', color: 'slate', glow: 'slate' },
-              development: { label: 'IN DEV', color: 'blue', glow: 'cyan' },
+              live: {
+                label: 'LIVE',
+                className: 'bg-gradient-to-r from-emerald-500/20 to-emerald-400/10 border border-emerald-400/40 text-emerald-300 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.4)]'
+              },
+              beta: {
+                label: 'BETA',
+                className: 'bg-gradient-to-r from-purple-500/20 to-purple-400/10 border border-purple-400/40 text-purple-300 shadow-[0_0_10px_rgba(168,85,247,0.3)]'
+              },
+              'coming-soon': {
+                label: 'COMING SOON',
+                className: 'bg-gradient-to-r from-amber-500/20 to-amber-400/10 border border-amber-400/40 text-amber-300 animate-[fadeIn_2s_ease-in-out_infinite]'
+              },
+              development: {
+                label: 'IN DEV',
+                className: 'bg-gradient-to-r from-cyan-500/20 to-blue-400/10 border border-cyan-400/40 text-cyan-300 animate-[shimmer_3s_ease-in-out_infinite]'
+              },
             }[project.status];
 
             return (
               <div
                 key={project.name}
-                className="group relative bg-gradient-to-b from-[#111213]/95 to-[#0a0b0c]/95 border border-white/10 rounded-2xl p-10 shadow-[0_0_15px_rgba(0,212,242,0.08)] backdrop-blur-md hover:border-cyan-400/30 hover:shadow-[0_0_30px_rgba(0,212,242,0.2)] hover:-translate-y-2 hover:scale-[1.02] transition-all duration-300"
+                className="group relative bg-gradient-to-b from-[#111213]/95 to-[#0a0b0c]/95 border border-white/10 rounded-2xl p-6 md:p-8 shadow-[0_0_15px_rgba(0,212,242,0.08)] backdrop-blur-md hover:border-cyan-400/40 hover:shadow-[0_0_35px_rgba(0,212,242,0.25)] hover:-translate-y-3 hover:scale-[1.03] transition-all duration-500 cursor-pointer"
+                style={{
+                  animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
+                }}
               >
+                {/* Glow effect on hover */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-500/0 to-purple-500/0 group-hover:from-cyan-500/5 group-hover:to-purple-500/5 transition-all duration-500 pointer-events-none"></div>
+
                 {/* Status Badge */}
-                <div className="absolute top-6 right-6">
-                  <span
-                    className={`px-3 py-1.5 rounded-full text-xs font-semibold tracking-wider
-                    ${statusConfig.color === 'emerald' ? 'bg-gradient-to-r from-emerald-500/20 to-emerald-400/10 border border-emerald-400/40 text-emerald-300 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.3)]' : ''}
-                    ${statusConfig.color === 'yellow' ? 'bg-gradient-to-r from-yellow-500/20 to-yellow-400/10 border border-yellow-400/40 text-yellow-300' : ''}
-                    ${statusConfig.color === 'slate' ? 'bg-gradient-to-r from-slate-500/20 to-slate-400/10 border border-slate-400/40 text-slate-300' : ''}
-                    ${statusConfig.color === 'blue' ? 'bg-gradient-to-r from-cyan-500/20 to-blue-400/10 border border-cyan-400/40 text-cyan-300' : ''}
-                  `}
-                  >
-                    {statusConfig.label}
-                  </span>
-                </div>
+                {statusConfig && (
+                  <div className="absolute top-4 right-4 z-10">
+                    <span className={`px-3 py-1.5 rounded-full text-xs font-semibold tracking-wider ${statusConfig.className}`}>
+                      {statusConfig.label}
+                    </span>
+                  </div>
+                )}
 
                 {/* Card Content with flex layout */}
-                <div className="flex flex-col h-full">
-                  {/* Icon */}
-                  <div className="mb-8">
-                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${project.gradient} p-0.5 group-hover:shadow-[0_0_20px_rgba(0,212,242,0.3)] transition-shadow duration-300`}>
-                      <div className="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center">
-                        <Icon className="w-7 h-7 text-white opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" />
+                <div className="flex flex-col h-full relative z-10">
+                  {/* Logo or Icon & Emoji */}
+                  <div className="mb-6 flex items-center gap-3">
+                    {project.logo ? (
+                      <div className="relative w-20 h-20 rounded-xl overflow-visible group-hover:scale-110 transition-all duration-500">
+                        {/* Glowing background behind logo */}
+                        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-cyan-500/20 via-purple-500/20 to-pink-500/20 blur-xl group-hover:from-cyan-500/40 group-hover:via-purple-500/40 group-hover:to-pink-500/40 transition-all duration-500"></div>
+                        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/10 group-hover:border-cyan-400/30 transition-all duration-500"></div>
+
+                        {/* Logo image */}
+                        <div className="relative w-full h-full p-2">
+                          <Image
+                            src={project.logo}
+                            alt={`${project.name} logo`}
+                            fill
+                            className="object-contain drop-shadow-[0_0_15px_rgba(0,212,242,0.3)]"
+                            unoptimized
+                          />
+                        </div>
                       </div>
-                    </div>
+                    ) : (
+                      <>
+                        <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${project.gradient} p-0.5 group-hover:shadow-[0_0_25px_rgba(0,212,242,0.4)] transition-all duration-500 group-hover:rotate-6`}>
+                          <div className="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center">
+                            <Icon className="w-7 h-7 text-white opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" />
+                          </div>
+                        </div>
+                        <span className="text-4xl group-hover:scale-125 transition-transform duration-300">{project.emoji}</span>
+                      </>
+                    )}
                   </div>
 
                   {/* Text Content */}
-                  <h3 className="text-xl font-semibold text-white mb-3 tracking-tight group-hover:text-cyan-300 transition-colors duration-300">{project.name}</h3>
-                  <p className="text-cyan-400/80 text-sm font-semibold mb-5">{project.tagline}</p>
-                  <p className="text-white/70 text-sm leading-relaxed mb-8">{project.description}</p>
+                  <h3 className="text-xl font-bold text-white mb-2 tracking-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-300 group-hover:to-purple-300 transition-all duration-300 flex items-center gap-2">
+                    {project.name}
+                  </h3>
+                  <p className="text-cyan-400/80 text-sm font-semibold mb-4 group-hover:text-cyan-300 transition-colors duration-300">{project.tagline}</p>
+                  <p className="text-white/70 text-sm leading-relaxed mb-6 group-hover:text-white/85 transition-colors duration-300">{project.description}</p>
 
                   {/* Tags - Push to bottom */}
-                  <div className="flex flex-wrap gap-2 mt-auto mb-5">
+                  <div className="flex flex-wrap gap-2 mt-auto mb-4">
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
@@ -146,18 +205,21 @@ export default function AppsPage() {
                   {/* CTA Buttons */}
                   <div className="flex gap-3">
                     {project.links.demo && (
-                      <button className="flex-1 px-5 py-2.5 bg-gradient-to-r from-cyan-500/20 to-blue-500/10 border border-cyan-400/30 rounded-full text-cyan-300 hover:from-cyan-400/30 hover:to-blue-500/20 hover:border-cyan-400/60 hover:text-white hover:shadow-[0_0_15px_rgba(0,212,242,0.3)] font-semibold text-sm transition-all duration-300">
-                        Try Now
+                      <button className="relative flex-1 px-5 py-2.5 bg-gradient-to-r from-purple-500/20 to-pink-500/10 border border-purple-400/30 rounded-full text-purple-300 hover:from-purple-500/30 hover:to-pink-500/30 hover:border-purple-400/60 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] font-semibold text-sm transition-all duration-300 overflow-hidden group/btn">
+                        <span className="relative z-10">Stay Tuned</span>
+                        <div className="absolute inset-0 bg-gradient-to-r from-purple-400/0 via-purple-400/20 to-purple-400/0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></div>
                       </button>
                     )}
                     {project.links.waitlist && (
-                      <button className="flex-1 px-5 py-2.5 bg-gradient-to-r from-cyan-500/20 to-blue-500/10 border border-cyan-400/30 rounded-full text-cyan-300 hover:from-cyan-400/30 hover:to-blue-500/20 hover:border-cyan-400/60 hover:text-white hover:shadow-[0_0_15px_rgba(0,212,242,0.3)] font-semibold text-sm transition-all duration-300">
-                        Join Waitlist
+                      <button className="relative flex-1 px-5 py-2.5 bg-gradient-to-r from-purple-500/20 to-pink-500/10 border border-purple-400/30 rounded-full text-purple-300 hover:from-purple-500/30 hover:to-pink-500/30 hover:border-purple-400/60 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] font-semibold text-sm transition-all duration-300 overflow-hidden group/btn">
+                        <span className="relative z-10">Stay Tuned</span>
+                        <div className="absolute inset-0 bg-gradient-to-r from-purple-400/0 via-purple-400/20 to-purple-400/0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></div>
                       </button>
                     )}
                     {project.links.github && (
-                      <button className="flex-1 px-5 py-2.5 bg-gradient-to-r from-cyan-500/20 to-blue-500/10 border border-cyan-400/30 rounded-full text-cyan-300 hover:from-cyan-400/30 hover:to-blue-500/20 hover:border-cyan-400/60 hover:text-white hover:shadow-[0_0_15px_rgba(0,212,242,0.3)] font-semibold text-sm transition-all duration-300">
-                        View Code
+                      <button className="relative flex-1 px-5 py-2.5 bg-gradient-to-r from-purple-500/20 to-pink-500/10 border border-purple-400/30 rounded-full text-purple-300 hover:from-purple-500/30 hover:to-pink-500/30 hover:border-purple-400/60 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] font-semibold text-sm transition-all duration-300 overflow-hidden group/btn">
+                        <span className="relative z-10">Stay Tuned</span>
+                        <div className="absolute inset-0 bg-gradient-to-r from-purple-400/0 via-purple-400/20 to-purple-400/0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></div>
                       </button>
                     )}
                   </div>

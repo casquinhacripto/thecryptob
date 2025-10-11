@@ -1,0 +1,150 @@
+'use client';
+
+import { useEffect, useState, useRef } from 'react';
+
+interface BitcoinData {
+  symbol: string;
+  price: number;
+  change24h: number;
+  high24h: number;
+  low24h: number;
+}
+
+export default function BTCWidget() {
+  const [data, setData] = useState<BitcoinData | null>(null);
+  const [isConnected, setIsConnected] = useState(false);
+  const [animatedCents, setAnimatedCents] = useState(0);
+  const previousPriceRef = useRef(0);
+
+  useEffect(() => {
+    const ws = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@ticker');
+
+    ws.onopen = () => {
+      setIsConnected(true);
+    };
+
+    ws.onmessage = (event) => {
+      const ticker = JSON.parse(event.data);
+      setData({
+        symbol: 'BTC/USDT',
+        price: parseFloat(ticker.c),
+        change24h: parseFloat(ticker.P),
+        high24h: parseFloat(ticker.h),
+        low24h: parseFloat(ticker.l),
+      });
+    };
+
+    ws.onerror = () => {
+      setIsConnected(false);
+    };
+
+    ws.onclose = () => {
+      setIsConnected(false);
+    };
+
+    return () => {
+      ws.close();
+    };
+  }, []);
+
+  // Animate cents for realistic "live" flickering effect
+  useEffect(() => {
+    if (!data) return;
+
+    const baseCents = (data.price % 1) * 100;
+
+    const interval = setInterval(() => {
+      const flicker = (Math.random() - 0.5) * 2;
+      setAnimatedCents(Math.max(0, Math.min(99, baseCents + flicker)));
+    }, 300);
+
+    return () => clearInterval(interval);
+  }, [data?.price]);
+
+  if (!data) {
+    return (
+      <div className="w-full h-full bg-[radial-gradient(circle_at_center,#0E0E10_40%,#060606_100%)] flex items-center justify-center">
+        <div className="text-center">
+          <div className="relative">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-500 mx-auto mb-3"></div>
+            <div className="absolute inset-0 rounded-full blur-xl bg-cyan-500/30 animate-pulse"></div>
+          </div>
+          <p className="text-slate-400 text-sm">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const whole = Math.floor(data.price).toLocaleString('en-US');
+  const cents = Math.floor(animatedCents).toString().padStart(2, '0');
+  const isPositive = data.change24h >= 0;
+
+  return (
+    <div className="w-full h-full bg-[radial-gradient(circle_at_center,#0E0E10_40%,#060606_100%)] flex flex-col items-center justify-center p-6 relative overflow-hidden">
+      {/* Background gradient overlay */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,212,242,0.05)_0%,transparent_50%)]"></div>
+
+      {/* Main Content */}
+      <div className="relative z-10 flex flex-col items-center gap-6">
+        {/* Bitcoin Logo with Glow */}
+        <div className="relative group">
+          {/* Multi-layer Radial Glow */}
+          <div className="absolute inset-0 -m-16 bg-[radial-gradient(circle_at_center,rgba(255,165,0,0.5)_0%,rgba(255,200,0,0.3)_25%,transparent_70%)] rounded-full blur-[80px] opacity-70 animate-[pulse_6s_ease-in-out_infinite]"></div>
+          <div className="absolute inset-0 -m-12 bg-[radial-gradient(circle_at_center,rgba(255,200,0,0.4)_0%,rgba(255,165,0,0.25)_40%,transparent_65%)] rounded-full blur-[60px] opacity-60 animate-[pulse_4s_ease-in-out_infinite_1s]"></div>
+
+          {/* Logo */}
+          <div className="relative w-20 h-20 bg-gradient-to-br from-orange-500 via-yellow-500 to-yellow-600 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(255,165,0,0.6)]">
+            <span className="text-white text-5xl font-bold drop-shadow-[0_0_10px_rgba(0,0,0,0.5)]">₿</span>
+          </div>
+        </div>
+
+        {/* Price Display */}
+        <div className="font-mono text-white leading-none text-center">
+          <div className="flex items-start justify-center">
+            {/* Dollar Sign */}
+            <span className="text-2xl font-bold opacity-80 mr-1 -translate-y-1">$</span>
+
+            <div>
+              {/* Whole Number */}
+              <span className="text-5xl tracking-tight font-extrabold drop-shadow-[0_0_15px_rgba(0,212,242,0.3)]">
+                {whole}
+              </span>
+              {/* Decimals */}
+              <span className="text-3xl opacity-70 animate-pulse ml-1 font-bold">
+                .{cents}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* 24h Stats Row */}
+        <div className="flex items-center gap-6 text-sm">
+          <div className="text-center">
+            <div className="text-slate-500 text-xs mb-1">24h Change</div>
+            <div className={`font-bold ${isPositive ? 'text-green-400' : 'text-red-400'}`}>
+              {isPositive ? '+' : ''}{data.change24h.toFixed(2)}%
+            </div>
+          </div>
+          <div className="text-center">
+            <div className="text-slate-500 text-xs mb-1">Low / High</div>
+            <div className="text-slate-300 font-semibold text-xs">
+              ${data.low24h.toLocaleString('en-US', { maximumFractionDigits: 0 })} / ${data.high24h.toLocaleString('en-US', { maximumFractionDigits: 0 })}
+            </div>
+          </div>
+        </div>
+
+        {/* Live Indicator */}
+        <div className="flex items-center gap-2">
+          <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-400 animate-pulse' : 'bg-red-400'}`}></div>
+          <span className="text-xs text-slate-400 font-medium">{isConnected ? 'LIVE' : 'DISCONNECTED'}</span>
+        </div>
+      </div>
+
+      {/* Watermark - Bottom Right */}
+      <div className="absolute bottom-3 right-4 text-right">
+        <div className="text-[10px] text-slate-600 font-medium">Powered by</div>
+        <div className="text-cyan-400 font-bold text-xs tracking-wide">TheCrypto_B</div>
+      </div>
+    </div>
+  );
+}

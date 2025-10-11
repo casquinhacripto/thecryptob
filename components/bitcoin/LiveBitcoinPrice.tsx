@@ -10,6 +10,7 @@ export default function LiveBitcoinPrice() {
   const [priceFlash, setPriceFlash] = useState(false);
   const [displayPrice, setDisplayPrice] = useState(0);
   const previousPriceRef = useRef(0);
+  const [priceDirection, setPriceDirection] = useState<'up' | 'down' | null>(null);
 
   // Animate cents for realistic "live" flickering effect
   useEffect(() => {
@@ -32,7 +33,16 @@ export default function LiveBitcoinPrice() {
 
     if (previousPriceRef.current !== 0 && previousPriceRef.current !== data.price) {
       setPriceFlash(true);
-      setTimeout(() => setPriceFlash(false), 500);
+      // Determine direction
+      if (data.price > previousPriceRef.current) {
+        setPriceDirection('up');
+      } else {
+        setPriceDirection('down');
+      }
+      setTimeout(() => {
+        setPriceFlash(false);
+        setPriceDirection(null);
+      }, 800);
     }
 
     previousPriceRef.current = data.price;
@@ -83,31 +93,55 @@ export default function LiveBitcoinPrice() {
     <div className="btc-tracker-hero">
       {/* Hero: Bitcoin Logo + Massive Price */}
       <div className="flex items-center justify-center gap-12 mb-12 flex-wrap">
-        {/* Bitcoin Logo with Premium Soft-Edge Glow */}
+        {/* Bitcoin Logo with Premium Soft-Edge Glow + Floating Animation */}
         <div className="relative group">
           {/* Enhanced Multi-layer Radial Glow - Bitcoin Orange/Gold Theme */}
           <div className="absolute inset-0 -m-20 bg-[radial-gradient(circle_at_center,rgba(255,165,0,0.5)_0%,rgba(255,200,0,0.3)_25%,rgba(255,127,48,0.2)_50%,transparent_70%)] rounded-full blur-[100px] opacity-70 animate-[pulse_6s_ease-in-out_infinite] group-hover:opacity-90 transition-opacity duration-700"></div>
           <div className="absolute inset-0 -m-16 bg-[radial-gradient(circle_at_center,rgba(255,200,0,0.4)_0%,rgba(255,165,0,0.25)_40%,transparent_65%)] rounded-full blur-[80px] opacity-60 animate-[pulse_4s_ease-in-out_infinite_1s]"></div>
           <div className="absolute inset-0 -m-12 bg-[radial-gradient(circle_at_center,rgba(255,165,0,0.35)_0%,rgba(255,127,48,0.2)_50%,transparent_70%)] rounded-full blur-[60px] opacity-70 animate-[pulse_5s_ease-in-out_infinite_2s]"></div>
 
-          {/* Pulsing ring effect */}
-          <div className="absolute inset-0 -m-14 rounded-full bg-gradient-to-r from-orange-400/30 via-yellow-400/30 to-orange-400/30 blur-[70px] opacity-50 animate-pulse"></div>
+          {/* Pulsing ring effect with ripple animation */}
+          <div className="absolute inset-0 -m-14 rounded-full bg-gradient-to-r from-orange-400/30 via-yellow-400/30 to-orange-400/30 blur-[70px] opacity-50 animate-[pulse_3s_ease-in-out_infinite]"></div>
 
-          {/* Logo */}
-          <div className="relative w-36 h-36 md:w-48 md:h-48 bg-gradient-to-br from-orange-500 via-yellow-500 to-yellow-600 rounded-full flex items-center justify-center shadow-[0_0_60px_rgba(255,165,0,0.6),0_0_100px_rgba(255,165,0,0.3)] transform group-hover:scale-110 transition-transform duration-300">
-            <span className="text-white text-7xl md:text-8xl font-bold drop-shadow-[0_0_20px_rgba(0,0,0,0.5)]">₿</span>
+          {/* Glow ripple effect - expanding ring */}
+          <div className="absolute inset-0 -m-20 rounded-full bg-gradient-to-r from-orange-400/20 via-yellow-400/20 to-orange-400/20 blur-[50px] opacity-40 animate-[ping_4s_ease-in-out_infinite]"></div>
+
+          {/* Logo with floating animation */}
+          <div className="relative w-36 h-36 md:w-48 md:h-48 bg-gradient-to-br from-orange-500 via-yellow-500 to-yellow-600 rounded-full flex items-center justify-center shadow-[0_0_60px_rgba(255,165,0,0.6),0_0_100px_rgba(255,165,0,0.3)] transform group-hover:scale-110 transition-all duration-500 animate-[float_3s_ease-in-out_infinite]">
+            <span className="text-white text-7xl md:text-8xl font-bold drop-shadow-[0_0_20px_rgba(0,0,0,0.5)] group-hover:rotate-12 transition-transform duration-500">₿</span>
           </div>
         </div>
 
-        {/* Enhanced Price Display with Premium Typography */}
-        <div className={`font-mono text-white leading-none text-center md:text-left transition-all duration-300 ${priceFlash ? 'scale-105' : 'scale-100'}`}>
+        {/* Enhanced Price Display with Premium Typography + Tooltip */}
+        <div
+          className={`font-mono text-white leading-none text-center md:text-left transition-all duration-300 ${priceFlash ? 'scale-105' : 'scale-100'} group/price relative cursor-help`}
+          title="Live price data powered by Binance WebSocket"
+        >
+          {/* Tooltip on hover */}
+          <div className="absolute -top-16 left-1/2 -translate-x-1/2 opacity-0 group-hover/price:opacity-100 transition-all duration-300 pointer-events-none z-50">
+            <div className="bg-slate-900/95 backdrop-blur-xl border border-cyan-500/40 rounded-lg px-4 py-2 shadow-[0_0_30px_rgba(6,182,212,0.3)] whitespace-nowrap">
+              <p className="text-xs font-semibold text-cyan-300">Live price data powered by Binance</p>
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-2 h-2 bg-slate-900 border-r border-b border-cyan-500/40 rotate-45"></div>
+            </div>
+          </div>
+
           <div className="flex items-start">
             {/* Dollar Sign - Smaller and Elevated */}
-            <span className="text-5xl md:text-7xl font-bold opacity-80 mr-2 -translate-y-2 md:-translate-y-4">$</span>
+            <span className={`text-5xl md:text-7xl font-bold opacity-80 mr-2 -translate-y-2 md:-translate-y-4 transition-colors duration-300 ${
+              priceDirection === 'up' ? 'text-green-400' : priceDirection === 'down' ? 'text-red-400' : ''
+            }`}>$</span>
 
-            <div className={`${priceFlash ? 'text-cyan-400' : ''} transition-colors duration-300`}>
+            <div className={`transition-colors duration-300 ${
+              priceDirection === 'up' ? 'text-green-400' : priceDirection === 'down' ? 'text-red-400' : ''
+            }`}>
               {/* Whole Number - Bold with Enhanced Shadow/Glow */}
-              <span className="text-7xl md:text-[12rem] tracking-tight font-extrabold drop-shadow-[0_0_20px_rgba(0,212,242,0.3)]">
+              <span className={`text-7xl md:text-[12rem] tracking-tight font-extrabold transition-all duration-300 ${
+                priceDirection === 'up'
+                  ? 'drop-shadow-[0_0_30px_rgba(34,197,94,0.5)]'
+                  : priceDirection === 'down'
+                  ? 'drop-shadow-[0_0_30px_rgba(239,68,68,0.5)]'
+                  : 'drop-shadow-[0_0_20px_rgba(0,212,242,0.3)]'
+              }`}>
                 {whole}
               </span>
               {/* Decimals - Lighter Weight for Hierarchy */}
