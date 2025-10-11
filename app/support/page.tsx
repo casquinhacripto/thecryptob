@@ -369,6 +369,7 @@ export default function SupportPage() {
             Every coffee fuels innovation and helps make crypto smarter for everyone.
           </p>
 
+
           {/* Glowing divider */}
           <div className="w-40 h-[2px] mx-auto bg-gradient-to-r from-transparent via-cyan-500 to-transparent rounded-full shadow-[0_0_10px_rgba(6,182,212,0.5)] animate-[fadeIn_1.2s_ease-out_0.6s_both]"></div>
         </section>
