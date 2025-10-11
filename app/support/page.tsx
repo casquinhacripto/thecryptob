@@ -361,12 +361,12 @@ export default function SupportPage() {
 
           {/* Mission Statement */}
           <p className="text-xl font-semibold text-gray-200 mb-6 animate-[fadeIn_0.8s_ease-out_0.2s_both]">
-            Building free tools for Web3 — powered by community, not paywalls.
+            We're building Web3 tools for the people.
           </p>
 
 
           <p className="text-base text-gray-400 leading-relaxed max-w-3xl mx-auto mb-8 animate-[fadeIn_1s_ease-out_0.4s_both]">
-            Every coffee fuels more innovation. Your support keeps powerful crypto tools free for everyone.
+            Every coffee fuels innovation and helps make crypto smarter for everyone.
           </p>
 
           {/* Glowing divider */}
