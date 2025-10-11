@@ -1,10 +1,10 @@
 'use client';
 
 import Script from 'next/script';
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 
-export default function GoogleAnalytics({ GA_MEASUREMENT_ID }: { GA_MEASUREMENT_ID: string }) {
+function GoogleAnalyticsTracker({ GA_MEASUREMENT_ID }: { GA_MEASUREMENT_ID: string }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -14,6 +14,10 @@ export default function GoogleAnalytics({ GA_MEASUREMENT_ID }: { GA_MEASUREMENT_
     }
   }, [pathname, searchParams]);
 
+  return null;
+}
+
+export default function GoogleAnalytics({ GA_MEASUREMENT_ID }: { GA_MEASUREMENT_ID: string }) {
   if (!GA_MEASUREMENT_ID || process.env.NODE_ENV !== 'production') {
     return null;
   }
@@ -39,6 +43,9 @@ export default function GoogleAnalytics({ GA_MEASUREMENT_ID }: { GA_MEASUREMENT_
             `,
         }}
       />
+      <Suspense fallback={null}>
+        <GoogleAnalyticsTracker GA_MEASUREMENT_ID={GA_MEASUREMENT_ID} />
+      </Suspense>
     </>
   );
 }
