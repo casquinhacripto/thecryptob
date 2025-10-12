@@ -146,17 +146,62 @@ export default function SupportPage() {
   };
 
   const copyAddress = (address: string, chain: string) => {
-    navigator.clipboard.writeText(address);
+    // Try modern clipboard API first
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(address)
+        .then(() => {
+          const shortAddress = `...${address.slice(-6)}`;
+          toast.success(`Address copied! ${shortAddress} ✅`, {
+            duration: 3000,
+            style: {
+              background: '#111827',
+              color: '#10b981',
+              border: '1px solid rgba(16, 185, 129, 0.3)'
+            }
+          });
+        })
+        .catch(() => {
+          // Fallback to textarea method
+          fallbackCopy(address);
+        });
+    } else {
+      // Fallback for browsers that don't support clipboard API
+      fallbackCopy(address);
+    }
+  };
 
-    const shortAddress = `...${address.slice(-6)}`;
-    toast.success(`Address copied! ${shortAddress} ✅`, {
-      duration: 3000,
-      style: {
-        background: '#111827',
-        color: '#10b981',
-        border: '1px solid rgba(16, 185, 129, 0.3)'
-      }
-    });
+  const fallbackCopy = (address: string) => {
+    const textarea = document.createElement('textarea');
+    textarea.value = address;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+
+    try {
+      document.execCommand('copy');
+      const shortAddress = `...${address.slice(-6)}`;
+      toast.success(`Address copied! ${shortAddress} ✅`, {
+        duration: 3000,
+        style: {
+          background: '#111827',
+          color: '#10b981',
+          border: '1px solid rgba(16, 185, 129, 0.3)'
+        }
+      });
+    } catch (err) {
+      toast.error('Failed to copy. Please copy manually.', {
+        duration: 4000,
+        style: {
+          background: '#111827',
+          color: '#ef4444',
+          border: '1px solid rgba(239, 68, 68, 0.3)'
+        }
+      });
+    } finally {
+      document.body.removeChild(textarea);
+    }
   };
 
   const ChainTile = ({ chainKey, isPopular, index }: { chainKey: keyof typeof chainInfo; isPopular?: boolean; index?: number }) => {
@@ -294,7 +339,44 @@ export default function SupportPage() {
                     key={amount}
                     onClick={(e) => {
                       e.preventDefault();
-                      navigator.clipboard.writeText(chain.address).then(() => {
+                      // Use the same copy logic with fallback
+                      if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(chain.address).then(() => {
+                          setThankYouDetails({
+                            amount,
+                            token: selectedToken,
+                            chain: chain.name,
+                            address: chain.address
+                          });
+                          setShowThankYou(true);
+                        }).catch(() => {
+                          // Fallback
+                          const textarea = document.createElement('textarea');
+                          textarea.value = chain.address;
+                          textarea.style.position = 'fixed';
+                          textarea.style.opacity = '0';
+                          document.body.appendChild(textarea);
+                          textarea.select();
+                          document.execCommand('copy');
+                          document.body.removeChild(textarea);
+                          setThankYouDetails({
+                            amount,
+                            token: selectedToken,
+                            chain: chain.name,
+                            address: chain.address
+                          });
+                          setShowThankYou(true);
+                        });
+                      } else {
+                        // Fallback for older browsers
+                        const textarea = document.createElement('textarea');
+                        textarea.value = chain.address;
+                        textarea.style.position = 'fixed';
+                        textarea.style.opacity = '0';
+                        document.body.appendChild(textarea);
+                        textarea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textarea);
                         setThankYouDetails({
                           amount,
                           token: selectedToken,
@@ -302,7 +384,7 @@ export default function SupportPage() {
                           address: chain.address
                         });
                         setShowThankYou(true);
-                      });
+                      }
                     }}
                     className="flex-1 px-2 py-2 bg-green-500/20 text-green-400 border border-green-500/30 rounded-lg text-xs font-bold hover:bg-green-500/40 transition-all hover:scale-105"
                   >
@@ -589,8 +671,32 @@ export default function SupportPage() {
             <div className="flex gap-3 justify-center">
               <button
                 onClick={() => {
-                  navigator.clipboard.writeText(thankYouDetails.address);
-                  toast.success('Address copied again!', { duration: 2000 });
+                  // Use fallback copy method
+                  if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(thankYouDetails.address)
+                      .then(() => toast.success('Address copied again!', { duration: 2000 }))
+                      .catch(() => {
+                        const textarea = document.createElement('textarea');
+                        textarea.value = thankYouDetails.address;
+                        textarea.style.position = 'fixed';
+                        textarea.style.opacity = '0';
+                        document.body.appendChild(textarea);
+                        textarea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textarea);
+                        toast.success('Address copied again!', { duration: 2000 });
+                      });
+                  } else {
+                    const textarea = document.createElement('textarea');
+                    textarea.value = thankYouDetails.address;
+                    textarea.style.position = 'fixed';
+                    textarea.style.opacity = '0';
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    toast.success('Address copied again!', { duration: 2000 });
+                  }
                 }}
                 className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-bold text-sm transition-all"
               >
