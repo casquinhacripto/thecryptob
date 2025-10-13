@@ -33,4 +33,6 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 This app is deployed on Google Cloud Run with automatic deployments from GitHub.
 
-Visit: https://thecryptob.com
+Live site: https://thecryptob.com
+
+Last updated: 2025-10-13
