@@ -55,11 +55,11 @@ const projects = [
     description: 'AI-powered trading signals, market screener, degen terminal, and portfolio tracking for serious crypto traders.',
     icon: TrendingUp,
     gradient: 'from-orange-500 to-red-500',
-    status: 'coming-soon',
+    status: 'live',
     category: 'Trading',
     tags: ['Crypto', 'Trading', 'AI'],
     links: {
-      github: '#',
+      demo: 'https://cryptosmartapp.com/',
     },
   },
   {
@@ -133,13 +133,21 @@ export default function AppsPage() {
             return (
               <div
                 key={project.name}
-                className="group relative bg-gradient-to-b from-[#111213]/95 to-[#0a0b0c]/95 border border-white/10 rounded-2xl p-6 md:p-8 shadow-[0_0_15px_rgba(0,212,242,0.08)] backdrop-blur-md hover:border-cyan-400/40 hover:shadow-[0_0_35px_rgba(0,212,242,0.25)] hover:-translate-y-3 hover:scale-[1.03] transition-all duration-500 cursor-pointer"
+                className={`group relative bg-gradient-to-b from-[#111213]/95 to-[#0a0b0c]/95 border rounded-2xl p-6 md:p-8 backdrop-blur-md hover:-translate-y-3 hover:scale-[1.03] transition-all duration-500 cursor-pointer ${
+                  project.status === 'live'
+                    ? 'border-emerald-400/20 shadow-[0_0_15px_rgba(16,185,129,0.08)] hover:border-emerald-400/30 hover:shadow-[0_0_20px_rgba(16,185,129,0.12)]'
+                    : 'border-white/10 shadow-[0_0_15px_rgba(0,212,242,0.08)] hover:border-cyan-400/40 hover:shadow-[0_0_35px_rgba(0,212,242,0.25)]'
+                }`}
                 style={{
                   animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
                 }}
               >
                 {/* Glow effect on hover */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-500/0 to-purple-500/0 group-hover:from-cyan-500/5 group-hover:to-purple-500/5 transition-all duration-500 pointer-events-none"></div>
+                <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br transition-all duration-500 pointer-events-none ${
+                  project.status === 'live'
+                    ? 'from-emerald-500/0 to-green-500/0 group-hover:from-emerald-500/3 group-hover:to-green-500/3'
+                    : 'from-cyan-500/0 to-purple-500/0 group-hover:from-cyan-500/5 group-hover:to-purple-500/5'
+                }`}></div>
 
                 {/* Status Badge */}
                 {statusConfig && (
@@ -157,8 +165,16 @@ export default function AppsPage() {
                     {project.logo ? (
                       <div className="relative w-20 h-20 rounded-xl overflow-visible group-hover:scale-110 transition-all duration-500">
                         {/* Glowing background behind logo */}
-                        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-cyan-500/20 via-purple-500/20 to-pink-500/20 blur-xl group-hover:from-cyan-500/40 group-hover:via-purple-500/40 group-hover:to-pink-500/40 transition-all duration-500"></div>
-                        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/10 group-hover:border-cyan-400/30 transition-all duration-500"></div>
+                        <div className={`absolute inset-0 rounded-xl bg-gradient-to-br blur-xl transition-all duration-500 ${
+                          project.status === 'live'
+                            ? 'from-emerald-500/15 via-green-500/15 to-emerald-500/15 group-hover:from-emerald-500/25 group-hover:via-green-500/25 group-hover:to-emerald-500/25'
+                            : 'from-cyan-500/20 via-purple-500/20 to-pink-500/20 group-hover:from-cyan-500/40 group-hover:via-purple-500/40 group-hover:to-pink-500/40'
+                        }`}></div>
+                        <div className={`absolute inset-0 rounded-xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border transition-all duration-500 ${
+                          project.status === 'live'
+                            ? 'border-emerald-400/15 group-hover:border-emerald-400/25'
+                            : 'border-white/10 group-hover:border-cyan-400/30'
+                        }`}></div>
 
                         {/* Logo image */}
                         <div className="relative w-full h-full p-2">
@@ -205,10 +221,23 @@ export default function AppsPage() {
                   {/* CTA Buttons */}
                   <div className="flex gap-3">
                     {project.links.demo && (
-                      <button className="relative flex-1 px-5 py-2.5 bg-gradient-to-r from-purple-500/20 to-pink-500/10 border border-purple-400/30 rounded-full text-purple-300 hover:from-purple-500/30 hover:to-pink-500/30 hover:border-purple-400/60 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] font-semibold text-sm transition-all duration-300 overflow-hidden group/btn">
-                        <span className="relative z-10">Stay Tuned</span>
-                        <div className="absolute inset-0 bg-gradient-to-r from-purple-400/0 via-purple-400/20 to-purple-400/0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></div>
-                      </button>
+                      <a
+                        href={project.status === 'live' ? project.links.demo : '#'}
+                        target={project.status === 'live' ? '_blank' : '_self'}
+                        rel={project.status === 'live' ? 'noopener noreferrer' : ''}
+                        className={`relative flex-1 px-5 py-2.5 bg-gradient-to-r rounded-full font-semibold text-sm transition-all duration-300 overflow-hidden group/btn flex items-center justify-center ${
+                          project.status === 'live'
+                            ? 'from-emerald-500/20 to-green-500/10 border border-emerald-400/30 text-emerald-300 hover:from-emerald-500/30 hover:to-green-500/20 hover:border-emerald-400/50 hover:text-white hover:shadow-[0_0_15px_rgba(16,185,129,0.3)]'
+                            : 'from-purple-500/20 to-pink-500/10 border border-purple-400/30 text-purple-300 hover:from-purple-500/30 hover:to-pink-500/30 hover:border-purple-400/60 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]'
+                        }`}
+                      >
+                        <span className="relative z-10">{project.status === 'live' ? 'Try Now' : 'Stay Tuned'}</span>
+                        <div className={`absolute inset-0 bg-gradient-to-r translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700 ${
+                          project.status === 'live'
+                            ? 'from-emerald-400/0 via-emerald-400/25 to-emerald-400/0'
+                            : 'from-purple-400/0 via-purple-400/20 to-purple-400/0'
+                        }`}></div>
+                      </a>
                     )}
                     {project.links.waitlist && (
                       <button className="relative flex-1 px-5 py-2.5 bg-gradient-to-r from-purple-500/20 to-pink-500/10 border border-purple-400/30 rounded-full text-purple-300 hover:from-purple-500/30 hover:to-pink-500/30 hover:border-purple-400/60 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] font-semibold text-sm transition-all duration-300 overflow-hidden group/btn">
