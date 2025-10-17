@@ -245,12 +245,6 @@ export default function AppsPage() {
                         <div className="absolute inset-0 bg-gradient-to-r from-purple-400/0 via-purple-400/20 to-purple-400/0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></div>
                       </button>
                     )}
-                    {project.links.github && (
-                      <button className="relative flex-1 px-5 py-2.5 bg-gradient-to-r from-purple-500/20 to-pink-500/10 border border-purple-400/30 rounded-full text-purple-300 hover:from-purple-500/30 hover:to-pink-500/30 hover:border-purple-400/60 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] font-semibold text-sm transition-all duration-300 overflow-hidden group/btn">
-                        <span className="relative z-10">Stay Tuned</span>
-                        <div className="absolute inset-0 bg-gradient-to-r from-purple-400/0 via-purple-400/20 to-purple-400/0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></div>
-                      </button>
-                    )}
                   </div>
                 </div>
               </div>
