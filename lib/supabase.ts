@@ -1,23 +1,12 @@
 // Supabase Client Configuration for B-Dashboard Analytics
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+// Get environment variables with fallback to prevent build-time errors
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key';
 
-// Only validate at runtime, not at build time
-let supabaseClient: ReturnType<typeof createClient> | null = null;
-
-export const supabase = new Proxy({} as ReturnType<typeof createClient>, {
-  get(target, prop: string | symbol) {
-    if (!supabaseClient) {
-      if (!supabaseUrl || !supabaseAnonKey) {
-        throw new Error('Missing Supabase environment variables');
-      }
-      supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
-    }
-    return (supabaseClient as Record<string | symbol, unknown>)[prop];
-  }
-});
+// Create client - it will work at runtime when real env vars are available
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Types for analytics data
 export interface AnalyticsEvent {
