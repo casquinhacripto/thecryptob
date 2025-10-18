@@ -121,8 +121,8 @@ const trackSession = async () => {
       }
     } else {
       console.log('[Analytics] Creating new session');
-      // Create new session
-      const result = await supabase.from('analytics_sessions').insert([
+      // Create new session - use upsert to handle duplicates
+      const result = await supabase.from('analytics_sessions').upsert([
         {
           session_id: sessionId,
           start_time: timestamp,
@@ -134,10 +134,14 @@ const trackSession = async () => {
           browser: getBrowser(),
           os: getOS(),
         },
-      ]);
+      ], {
+        onConflict: 'session_id',
+      });
 
       if (result.error) {
         console.error('[Analytics] Session insert error:', result.error);
+      } else {
+        console.log('[Analytics] Session created successfully');
       }
     }
   } catch (error) {
