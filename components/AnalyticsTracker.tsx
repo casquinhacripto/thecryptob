@@ -55,7 +55,7 @@ const getOS = () => {
 };
 
 // Track event
-const trackEvent = async (eventData: any) => {
+const trackEvent = async (eventData: { event_type: string; page?: string; app_name?: string }) => {
   try {
     const sessionId = getSessionId();
     const timestamp = Date.now();
@@ -80,7 +80,7 @@ const trackEvent = async (eventData: any) => {
 };
 
 // Create or update session
-const trackSession = async (pathname: string) => {
+const trackSession = async () => {
   try {
     const sessionId = getSessionId();
     const timestamp = Date.now();
@@ -137,7 +137,7 @@ export default function AnalyticsTracker() {
     });
 
     // Track/update session
-    trackSession(pathname || '/');
+    trackSession();
 
     // Track clicks on app cards
     const handleAppClick = (e: MouseEvent) => {
@@ -146,11 +146,13 @@ export default function AnalyticsTracker() {
 
       if (appCard) {
         const appName = appCard.getAttribute('data-app-name');
-        trackEvent({
-          event_type: 'app_click',
-          app_name: appName,
-          page: pathname,
-        });
+        if (appName) {
+          trackEvent({
+            event_type: 'app_click',
+            app_name: appName,
+            page: pathname,
+          });
+        }
       }
     };
 

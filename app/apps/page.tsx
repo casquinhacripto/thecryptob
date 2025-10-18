@@ -1,6 +1,6 @@
 'use client';
 
-import { Grid3x3, Sparkles, TrendingUp, Calculator, Eye } from 'lucide-react';
+import { Sparkles, TrendingUp, Calculator, Eye } from 'lucide-react';
 import Image from 'next/image';
 import { trackAppClick } from '@/lib/analytics';
 import { usePageTracking } from '@/hooks/usePageTracking';

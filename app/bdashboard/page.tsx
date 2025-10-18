@@ -7,8 +7,8 @@ import {
   Sparkles, Zap, Target
 } from 'lucide-react';
 import {
-  LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell,
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+  AreaChart, Area, PieChart, Pie, Cell,
+  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
 
 interface DashboardStats {
@@ -32,6 +32,18 @@ interface AnalyticsEvent {
   device?: string;
   browser?: string;
   app_name?: string;
+}
+
+interface AnalyticsSession {
+  session_id: string;
+  start_time: number;
+  end_time: number;
+  duration: number;
+  page_views: number;
+  events: number;
+  device?: string;
+  browser?: string;
+  os?: string;
 }
 
 export default function BDashboard() {
@@ -64,7 +76,7 @@ export default function BDashboard() {
   });
 
   const [events, setEvents] = useState<AnalyticsEvent[]>([]);
-  const [sessions, setSessions] = useState<any[]>([]);
+  const [, setSessions] = useState<AnalyticsSession[]>([]);
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
@@ -74,6 +86,7 @@ export default function BDashboard() {
       setIsAuthenticated(true);
       fetchAnalytics();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleLogin = (e: React.FormEvent) => {
@@ -128,20 +141,23 @@ export default function BDashboard() {
         return;
       }
 
-      setEvents(data.events || []);
-      setSessions(data.sessions || []);
+      const analyticsEvents: AnalyticsEvent[] = data.events || [];
+      const analyticsSessions: AnalyticsSession[] = data.sessions || [];
+
+      setEvents(analyticsEvents);
+      setSessions(analyticsSessions);
 
       // Calculate current stats
-      const uniqueSessions = new Set(data.events?.map((e: any) => e.session_id)).size;
-      const totalPageviews = data.events?.filter((e: any) => e.event_type === 'pageview').length || 0;
-      const totalClicks = data.events?.filter((e: any) => e.event_type === 'click').length || 0;
-      const appClicks = data.events?.filter((e: any) => e.event_type === 'app_click').length || 0;
-      const widgetViews = data.events?.filter((e: any) => e.event_type === 'widget_view').length || 0;
-      const widgetEmbeds = data.events?.filter((e: any) => e.event_type === 'widget_embed').length || 0;
-      const countries = new Set(data.events?.map((e: any) => e.country).filter(Boolean)).size;
+      const uniqueSessions = new Set(analyticsEvents.map((e) => e.session_id)).size;
+      const totalPageviews = analyticsEvents.filter((e) => e.event_type === 'pageview').length;
+      const totalClicks = analyticsEvents.filter((e) => e.event_type === 'click').length;
+      const appClicks = analyticsEvents.filter((e) => e.event_type === 'app_click').length;
+      const widgetViews = analyticsEvents.filter((e) => e.event_type === 'widget_view').length;
+      const widgetEmbeds = analyticsEvents.filter((e) => e.event_type === 'widget_embed').length;
+      const countries = new Set(analyticsEvents.map((e) => e.country).filter(Boolean)).size;
 
-      const avgDuration = data.sessions?.length > 0
-        ? data.sessions.reduce((acc: number, s: any) => acc + (s.duration || 0), 0) / data.sessions.length
+      const avgDuration = analyticsSessions.length > 0
+        ? analyticsSessions.reduce((acc, s) => acc + (s.duration || 0), 0) / analyticsSessions.length
         : 0;
 
       setStats({
@@ -171,18 +187,21 @@ export default function BDashboard() {
         const cutoffTime = now - daysInMs;
 
         // Filter events from previous period only
-        const prevEvents = prevData.events?.filter((e: any) => e.timestamp < cutoffTime) || [];
-        const prevSessions = prevData.sessions?.filter((s: any) => s.start_time < cutoffTime) || [];
+        const prevAnalyticsEvents: AnalyticsEvent[] = prevData.events || [];
+        const prevAnalyticsSessions: AnalyticsSession[] = prevData.sessions || [];
 
-        const prevUniqueSessions = new Set(prevEvents.map((e: any) => e.session_id)).size;
-        const prevPageviews = prevEvents.filter((e: any) => e.event_type === 'pageview').length;
-        const prevClicks = prevEvents.filter((e: any) => e.event_type === 'click').length;
-        const prevAppClicks = prevEvents.filter((e: any) => e.event_type === 'app_click').length;
-        const prevWidgetViews = prevEvents.filter((e: any) => e.event_type === 'widget_view').length;
-        const prevWidgetEmbeds = prevEvents.filter((e: any) => e.event_type === 'widget_embed').length;
-        const prevCountries = new Set(prevEvents.map((e: any) => e.country).filter(Boolean)).size;
+        const prevEvents = prevAnalyticsEvents.filter((e) => e.timestamp < cutoffTime);
+        const prevSessions = prevAnalyticsSessions.filter((s) => s.start_time < cutoffTime);
+
+        const prevUniqueSessions = new Set(prevEvents.map((e) => e.session_id)).size;
+        const prevPageviews = prevEvents.filter((e) => e.event_type === 'pageview').length;
+        const prevClicks = prevEvents.filter((e) => e.event_type === 'click').length;
+        const prevAppClicks = prevEvents.filter((e) => e.event_type === 'app_click').length;
+        const prevWidgetViews = prevEvents.filter((e) => e.event_type === 'widget_view').length;
+        const prevWidgetEmbeds = prevEvents.filter((e) => e.event_type === 'widget_embed').length;
+        const prevCountries = new Set(prevEvents.map((e) => e.country).filter(Boolean)).size;
         const prevAvgDuration = prevSessions.length > 0
-          ? prevSessions.reduce((acc: number, s: any) => acc + (s.duration || 0), 0) / prevSessions.length
+          ? prevSessions.reduce((acc, s) => acc + (s.duration || 0), 0) / prevSessions.length
           : 0;
 
         setPreviousStats({
@@ -271,7 +290,7 @@ export default function BDashboard() {
   // Prepare chart data
   const pagesByDay = events
     .filter(e => e.event_type === 'pageview')
-    .reduce((acc: any, event) => {
+    .reduce((acc: Record<string, number>, event) => {
       const date = new Date(event.timestamp).toLocaleDateString();
       acc[date] = (acc[date] || 0) + 1;
       return acc;
@@ -279,10 +298,10 @@ export default function BDashboard() {
 
   const pageviewsChartData = Object.entries(pagesByDay).map(([date, count]) => ({
     date,
-    pageviews: count,
+    pageviews: count as number,
   })).slice(-7); // Last 7 days
 
-  const deviceData = events.reduce((acc: any, event) => {
+  const deviceData = events.reduce((acc: Record<string, number>, event) => {
     if (event.device) {
       acc[event.device] = (acc[event.device] || 0) + 1;
     }
@@ -291,44 +310,44 @@ export default function BDashboard() {
 
   const deviceChartData = Object.entries(deviceData).map(([name, value]) => ({
     name: name.charAt(0).toUpperCase() + name.slice(1),
-    value,
+    value: value as number,
   }));
 
   const topPages = events
     .filter(e => e.event_type === 'pageview' && e.page)
-    .reduce((acc: any, event) => {
+    .reduce((acc: Record<string, number>, event) => {
       acc[event.page!] = (acc[event.page!] || 0) + 1;
       return acc;
     }, {});
 
   const topPagesData = Object.entries(topPages)
-    .map(([page, count]) => ({ page, count }))
-    .sort((a: any, b: any) => b.count - a.count)
+    .map(([page, count]) => ({ page, count: count as number }))
+    .sort((a, b) => b.count - a.count)
     .slice(0, 5);
 
   const countryData = events
     .filter(e => e.country)
-    .reduce((acc: any, event) => {
+    .reduce((acc: Record<string, number>, event) => {
       acc[event.country!] = (acc[event.country!] || 0) + 1;
       return acc;
     }, {});
 
   const topCountries = Object.entries(countryData)
-    .map(([country, count]) => ({ country, count }))
-    .sort((a: any, b: any) => b.count - a.count)
+    .map(([country, count]) => ({ country, count: count as number }))
+    .sort((a, b) => b.count - a.count)
     .slice(0, 5);
 
   // App Clicks Breakdown
   const appClicksData = events
     .filter(e => e.event_type === 'app_click' && e.app_name)
-    .reduce((acc: any, event) => {
+    .reduce((acc: Record<string, number>, event) => {
       acc[event.app_name!] = (acc[event.app_name!] || 0) + 1;
       return acc;
     }, {});
 
   const topAppClicks = Object.entries(appClicksData)
-    .map(([app, count]) => ({ app, count }))
-    .sort((a: any, b: any) => b.count - a.count)
+    .map(([app, count]) => ({ app, count: count as number }))
+    .sort((a, b) => b.count - a.count)
     .slice(0, 10);
 
   const COLORS = ['#06B6D4', '#3B82F6', '#8B5CF6', '#EC4899', '#F59E0B'];
@@ -759,7 +778,12 @@ export default function BDashboard() {
                     cx="50%"
                     cy="50%"
                     labelLine={false}
-                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                    label={(props) => {
+                      const { name, value } = props as unknown as { name: string; value: number };
+                      const total = deviceChartData.reduce((sum, entry) => sum + entry.value, 0);
+                      const percent = ((value / total) * 100).toFixed(0);
+                      return `${name} ${percent}%`;
+                    }}
                     outerRadius={90}
                     fill="#8884d8"
                     dataKey="value"
@@ -789,7 +813,7 @@ export default function BDashboard() {
                 Top Pages
               </h3>
               <div className="space-y-3">
-                {topPagesData.length > 0 ? topPagesData.map((item: any, index) => (
+                {topPagesData.length > 0 ? topPagesData.map((item, index) => (
                   <div key={index} className="flex items-center justify-between py-3 px-4 bg-slate-800/30 rounded-xl hover:bg-slate-800/50 border border-white/5 hover:border-cyan-500/30 transition-all duration-300 group">
                     <span className="text-sm text-gray-300 font-medium group-hover:text-white transition-colors">{item.page}</span>
                     <span className="text-sm font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1.5 rounded-lg border border-cyan-500/20">{item.count}</span>
@@ -811,7 +835,7 @@ export default function BDashboard() {
                 Top Countries
               </h3>
               <div className="space-y-3">
-                {topCountries.length > 0 ? topCountries.map((item: any, index) => (
+                {topCountries.length > 0 ? topCountries.map((item, index) => (
                   <div key={index} className="flex items-center justify-between py-3 px-4 bg-slate-800/30 rounded-xl hover:bg-slate-800/50 border border-white/5 hover:border-emerald-500/30 transition-all duration-300 group">
                     <span className="text-sm text-gray-300 font-medium group-hover:text-white transition-colors">{item.country}</span>
                     <span className="text-sm font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-lg border border-emerald-500/20">{item.count}</span>
@@ -838,7 +862,7 @@ export default function BDashboard() {
                 </span>
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {topAppClicks.map((item: any, index) => (
+                {topAppClicks.map((item, index) => (
                   <div
                     key={index}
                     className="flex items-center justify-between py-3.5 px-5 bg-slate-800/30 rounded-xl hover:bg-slate-800/50 border border-white/5 hover:border-emerald-500/30 transition-all duration-300 group"
