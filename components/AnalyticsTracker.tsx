@@ -73,7 +73,13 @@ const trackEvent = async (eventData: { event_type: string; page?: string; app_na
       ...eventData,
     };
 
-    await supabase.from('analytics_events').insert([event]);
+    console.log('[Analytics] Tracking event:', event);
+    const result = await supabase.from('analytics_events').insert([event]);
+    console.log('[Analytics] Insert result:', result);
+
+    if (result.error) {
+      console.error('[Analytics] Insert error:', result.error);
+    }
   } catch (error) {
     console.error('Analytics tracking error:', error);
   }
@@ -85,16 +91,23 @@ const trackSession = async () => {
     const sessionId = getSessionId();
     const timestamp = Date.now();
 
+    console.log('[Analytics] Tracking session:', sessionId);
+
     // Check if session exists
-    const { data: existingSession } = await supabase
+    const { data: existingSession, error: selectError } = await supabase
       .from('analytics_sessions')
       .select('*')
       .eq('session_id', sessionId)
       .single();
 
+    if (selectError && selectError.code !== 'PGRST116') {
+      console.error('[Analytics] Session select error:', selectError);
+    }
+
     if (existingSession) {
+      console.log('[Analytics] Updating existing session');
       // Update existing session
-      await supabase
+      const result = await supabase
         .from('analytics_sessions')
         .update({
           end_time: timestamp,
@@ -102,9 +115,14 @@ const trackSession = async () => {
           updated_at: new Date().toISOString(),
         })
         .eq('session_id', sessionId);
+
+      if (result.error) {
+        console.error('[Analytics] Session update error:', result.error);
+      }
     } else {
+      console.log('[Analytics] Creating new session');
       // Create new session
-      await supabase.from('analytics_sessions').insert([
+      const result = await supabase.from('analytics_sessions').insert([
         {
           session_id: sessionId,
           start_time: timestamp,
@@ -117,6 +135,10 @@ const trackSession = async () => {
           os: getOS(),
         },
       ]);
+
+      if (result.error) {
+        console.error('[Analytics] Session insert error:', result.error);
+      }
     }
   } catch (error) {
     console.error('Session tracking error:', error);
@@ -128,7 +150,12 @@ export default function AnalyticsTracker() {
 
   useEffect(() => {
     // Skip tracking for dashboard
-    if (pathname?.includes('/bdashboard')) return;
+    if (pathname?.includes('/bdashboard')) {
+      console.log('[Analytics] Skipping tracking for /bdashboard');
+      return;
+    }
+
+    console.log('[Analytics] Tracking pageview for:', pathname);
 
     // Track pageview
     trackEvent({
