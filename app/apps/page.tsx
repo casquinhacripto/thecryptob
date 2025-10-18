@@ -70,11 +70,11 @@ const projects = [
     description: 'Sketch, draw, annotate, and organize ideas visually. Perfect for brainstorming, mind maps, and creative work.',
     icon: Eye,
     gradient: 'from-indigo-500 to-purple-500',
-    status: 'coming-soon',
+    status: 'live',
     category: 'Productivity',
     tags: ['Productivity', 'Design', 'Mobile'],
     links: {
-      demo: '#',
+      demo: 'https://www.visionnote.app/',
     },
   },
 ];
