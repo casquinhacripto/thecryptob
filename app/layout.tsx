@@ -3,6 +3,8 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import MainLayout from "@/components/shared/MainLayout";
 import GoogleAnalytics from "@/components/shared/GoogleAnalytics";
+import CookieConsent from "@/components/shared/CookieConsent";
+import AnalyticsTracker from "@/components/AnalyticsTracker";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -89,7 +91,9 @@ export default function RootLayout({
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
           <GoogleAnalytics GA_MEASUREMENT_ID={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
         )}
+        <AnalyticsTracker />
         <MainLayout>{children}</MainLayout>
+        <CookieConsent />
       </body>
     </html>
   );

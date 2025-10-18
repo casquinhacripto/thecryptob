@@ -1,5 +1,9 @@
+'use client';
+
 import { Grid3x3, Sparkles, TrendingUp, Calculator, Eye } from 'lucide-react';
 import Image from 'next/image';
+import { trackAppClick } from '@/lib/analytics';
+import { usePageTracking } from '@/hooks/usePageTracking';
 
 const projects = [
   {
@@ -80,6 +84,8 @@ const projects = [
 ];
 
 export default function AppsPage() {
+  usePageTracking();
+
   return (
     <div className="min-h-screen">
       {/* Background Gradients */}
@@ -225,6 +231,11 @@ export default function AppsPage() {
                         href={project.status === 'live' ? project.links.demo : '#'}
                         target={project.status === 'live' ? '_blank' : '_self'}
                         rel={project.status === 'live' ? 'noopener noreferrer' : ''}
+                        onClick={() => {
+                          if (project.status === 'live') {
+                            trackAppClick(project.name, 'demo');
+                          }
+                        }}
                         className={`relative flex-1 px-5 py-2.5 bg-gradient-to-r rounded-full font-semibold text-sm transition-all duration-300 overflow-hidden group/btn flex items-center justify-center ${
                           project.status === 'live'
                             ? 'from-emerald-500/20 to-green-500/10 border border-emerald-400/30 text-emerald-300 hover:from-emerald-500/30 hover:to-green-500/20 hover:border-emerald-400/50 hover:text-white hover:shadow-[0_0_15px_rgba(16,185,129,0.3)]'
