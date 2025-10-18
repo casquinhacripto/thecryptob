@@ -8,14 +8,14 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 let supabaseClient: ReturnType<typeof createClient> | null = null;
 
 export const supabase = new Proxy({} as ReturnType<typeof createClient>, {
-  get(target, prop) {
+  get(target, prop: string | symbol) {
     if (!supabaseClient) {
       if (!supabaseUrl || !supabaseAnonKey) {
         throw new Error('Missing Supabase environment variables');
       }
       supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
     }
-    return (supabaseClient as any)[prop];
+    return (supabaseClient as Record<string | symbol, unknown>)[prop];
   }
 });
 
