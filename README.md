@@ -1,4 +1,14 @@
+# TheCrypto_B Hub
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## Features
+
+- Live Bitcoin Price Tracker
+- Project Showcase (Apps & Widgets)
+- B-Dashboard Analytics (Premium Admin Dashboard)
+- Real-time Analytics with Supabase
+- Support Page with Crypto Donations
 
 ## Getting Started
 
