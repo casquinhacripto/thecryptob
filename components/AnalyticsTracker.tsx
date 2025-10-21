@@ -54,11 +54,45 @@ const getOS = () => {
   return 'Other';
 };
 
+// Get geolocation data (cached in sessionStorage)
+const getGeolocation = async () => {
+  if (typeof window === 'undefined') return { country: null, city: null };
+
+  // Check if already cached in session
+  const cached = sessionStorage.getItem('analytics_geo');
+  if (cached) {
+    try {
+      return JSON.parse(cached);
+    } catch {
+      // Invalid cache, continue to fetch
+    }
+  }
+
+  try {
+    // Use ipapi.co for free geolocation (150 requests/day limit)
+    const response = await fetch('https://ipapi.co/json/');
+    const data = await response.json();
+
+    const geo = {
+      country: data.country_name || null,
+      city: data.city || null,
+    };
+
+    // Cache the result for this session
+    sessionStorage.setItem('analytics_geo', JSON.stringify(geo));
+    return geo;
+  } catch (error) {
+    console.error('[Analytics] Geolocation fetch error:', error);
+    return { country: null, city: null };
+  }
+};
+
 // Track event
 const trackEvent = async (eventData: { event_type: string; page?: string; app_name?: string }) => {
   try {
     const sessionId = getSessionId();
     const timestamp = Date.now();
+    const geo = await getGeolocation();
 
     const event = {
       id: `event_${timestamp}_${Math.random().toString(36).substr(2, 9)}`,
@@ -70,6 +104,8 @@ const trackEvent = async (eventData: { event_type: string; page?: string; app_na
       screen_size: `${window.innerWidth}x${window.innerHeight}`,
       user_agent: navigator.userAgent,
       referrer: document.referrer || null,
+      country: geo.country,
+      city: geo.city,
       ...eventData,
     };
 
@@ -121,6 +157,8 @@ const trackSession = async () => {
       }
     } else {
       console.log('[Analytics] Creating new session');
+      const geo = await getGeolocation();
+
       // Create new session - use upsert to handle duplicates
       const result = await supabase.from('analytics_sessions').upsert([
         {
@@ -133,6 +171,8 @@ const trackSession = async () => {
           device: getDeviceType(),
           browser: getBrowser(),
           os: getOS(),
+          country: geo.country,
+          city: geo.city,
         },
       ], {
         onConflict: 'session_id',
