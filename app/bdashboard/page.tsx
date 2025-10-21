@@ -89,6 +89,14 @@ export default function BDashboard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Refetch data when dateRange changes
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchAnalytics();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dateRange]);
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -578,7 +586,6 @@ export default function BDashboard() {
                   key={range}
                   onClick={() => {
                     setDateRange(range);
-                    setTimeout(fetchAnalytics, 100);
                   }}
                   className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 ${
                     dateRange === range
