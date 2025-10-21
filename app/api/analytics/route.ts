@@ -91,8 +91,10 @@ export async function GET(request: NextRequest) {
     }
 
     const { searchParams } = new URL(request.url);
-    const days = parseInt(searchParams.get('days') || '30');
+    const days = parseFloat(searchParams.get('days') || '30');
     const startTimestamp = Date.now() - (days * 24 * 60 * 60 * 1000);
+
+    console.log('[Analytics API] Fetching data for last', days, 'days, startTimestamp:', new Date(startTimestamp).toISOString());
 
     // Fetch events
     const { data: events, error: eventsError } = await supabase
@@ -117,6 +119,8 @@ export async function GET(request: NextRequest) {
       console.error('Supabase sessions fetch error:', sessionsError);
       return NextResponse.json({ error: sessionsError.message }, { status: 500 });
     }
+
+    console.log('[Analytics API] Returning', events?.length || 0, 'events and', sessions?.length || 0, 'sessions');
 
     return NextResponse.json({ events, sessions });
   } catch (error) {

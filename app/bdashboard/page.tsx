@@ -144,6 +144,13 @@ export default function BDashboard() {
       const analyticsEvents: AnalyticsEvent[] = data.events || [];
       const analyticsSessions: AnalyticsSession[] = data.sessions || [];
 
+      console.log('[Dashboard] Received data:', {
+        events: analyticsEvents.length,
+        sessions: analyticsSessions.length,
+        sampleEvent: analyticsEvents[0],
+        sampleSession: analyticsSessions[0]
+      });
+
       setEvents(analyticsEvents);
       setSessions(analyticsSessions);
 
@@ -160,7 +167,7 @@ export default function BDashboard() {
         ? analyticsSessions.reduce((acc, s) => acc + (s.duration || 0), 0) / analyticsSessions.length
         : 0;
 
-      setStats({
+      const calculatedStats = {
         totalPageviews,
         uniqueVisitors: uniqueSessions,
         avgSessionDuration: avgDuration,
@@ -169,7 +176,19 @@ export default function BDashboard() {
         widgetViews,
         widgetEmbeds,
         countries,
+      };
+
+      console.log('[Dashboard] Calculated stats:', calculatedStats);
+      console.log('[Dashboard] Event types breakdown:', {
+        pageviews: analyticsEvents.filter(e => e.event_type === 'pageview').length,
+        clicks: analyticsEvents.filter(e => e.event_type === 'click').length,
+        app_clicks: analyticsEvents.filter(e => e.event_type === 'app_click').length,
+        widget_views: analyticsEvents.filter(e => e.event_type === 'widget_view').length,
+        widget_embeds: analyticsEvents.filter(e => e.event_type === 'widget_embed').length,
+        other: analyticsEvents.filter(e => !['pageview', 'click', 'app_click', 'widget_view', 'widget_embed'].includes(e.event_type)).length,
       });
+
+      setStats(calculatedStats);
 
       // Fetch previous period for comparison (skip for realtime)
       const prevDays = dateRange === 'realtime' ? '0.08' : String(parseInt(dateRange) * 2);
