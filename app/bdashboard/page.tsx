@@ -822,7 +822,11 @@ export default function BDashboard() {
                     contentStyle={{
                       background: 'rgba(15, 23, 42, 0.95)',
                       border: '1px solid rgba(6, 182, 212, 0.3)',
-                      borderRadius: '8px'
+                      borderRadius: '8px',
+                      color: '#E2E8F0'
+                    }}
+                    itemStyle={{
+                      color: '#E2E8F0'
                     }}
                   />
                 </PieChart>
